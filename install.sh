@@ -145,16 +145,11 @@ on_install() {
     ui_print "- Installing for $ARCH"
     
     move_stdout "zip-$ARCH" "$MODPATH/system/usr/share/mmrl/bin/zip"
+    move_stdout "curl-$ARCH" "$MODPATH/system/usr/share/mmrl/bin/curl"
 
     # Symbolic link for lowercase/UPPERCASE support in terminal
     [ -d "$MODPATH/system/bin/" ] || mkdir -p "$MODPATH/system/bin/"
     # ln -sf node "$MODPATH/system/bin/nodejs"
-
-    if [ -f "/system/bin/bash" ]; then
-      ui_print "- Skipping bash install, already exist"
-    else
-      move_stdout "bash-$ARCH" "$MODPATH/system/bin/bash"
-    fi
     
 }
 
@@ -165,9 +160,9 @@ on_install() {
 set_permissions() {
     # The following is the default rule, DO NOT remove
     set_perm_recursive $MODPATH 0 0 0755 0644
-    set_perm $MODPATH/system/usr/share/mmrl/bin/xh 0 0 0755
+    set_perm $MODPATH/system/usr/share/mmrl/bin/curl 0 0 0755
     set_perm $MODPATH/system/usr/share/mmrl/bin/zip 0 0 0755
-    set_perm $MODPATH/system/usr/share/mmrl/misc/mmrl_installer.sh 0 0 0755
+    set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_installer 0 0 0755
     # Here are some examples:
     # set_perm_recursive  $MODPATH/system/lib       0     0       0755      0644
     # set_perm  $MODPATH/system/bin/app_process32   0     2000    0755      u:object_r:zygote_exec:s0
