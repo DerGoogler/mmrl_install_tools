@@ -7,6 +7,9 @@ XHS=$(getprop "persist.$SCOPE.xhs" "/system/usr/share/mmrl/bin/xhs")
 ZIP=$(getprop "persist.$SCOPE.zip" "/system/usr/share/mmrl/bin/zip")
 UNZIP=$(getprop "persist.$SCOPE.unzip" "/system/bin/unzip")
 
+chmod 755 $XHS
+chmod 755 $ZIP
+
 # Systemless Mkshrc could affect this
 TMPDIR="/data/local/tmp"
 cd $TMPDIR
