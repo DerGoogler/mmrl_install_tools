@@ -15,7 +15,7 @@
       type="text"
       title="Change zip bin path"
       initialValue="/system/usr/share/mmrl/bin/zip">
-    <ListItemText primary="Change zip bin path" secondary={getprop("persist.mmrlini.zip", "/system/usr/share/mmrl/bin/zip")} />
+    <ListItemText primary="Change zip bin path" />
   </ListItemDialogEditText>
   <ListItemDialogEditText
       id="unzip"
@@ -24,7 +24,16 @@
       type="text"
       title="Change unzip bin path"
       initialValue="/system/bin/unzip">
-    <ListItemText primary="Change unzip bin path" secondary={getprop("persist.mmrlini.unzip", "/system/bin/unzip")} />
+    <ListItemText primary="Change unzip bin path" />
+  </ListItemDialogEditText>
+ <ListItemDialogEditText
+      id="install_folder"
+      scope="mmrlini"
+      inputLabel="Path"
+      type="text"
+      title="Change install path"
+      initialValue="/data/local/tmp/<NAME>-<BRANCH>-moduled.zip">
+    <ListItemText primary="Change unzip bin path" secondary="Edit with care!" />
   </ListItemDialogEditText>
 </List>
 
