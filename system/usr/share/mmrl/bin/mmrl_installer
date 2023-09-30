@@ -12,10 +12,11 @@ UNZIP=$(getprop "persist.$SCOPE.unzip" "/system/bin/unzip")
 # Systemless Mkshrc could affect this
 TMPDIR="/data/local/tmp"
 cd $TMPDIR
-NAME="$1"
-URL="$2"
-BRANCH="$3"
-INSTALLER_CLI="$4"
+
+# $NAME - Id of module
+# $URL - GitHub archive url
+# $BRANCH - Default branch of the module
+# $INSTALLER_CLI - Installer CLI - Never set the CLI yourself!
 
 GREEN="\x1b[32m"
 RED="\x1b[31m"
