@@ -52,8 +52,8 @@ fi
 
 echo "- Decompressing..."
 
-if [ ! -d "$TMPDIR/mmrl_unzipped" ]; then
-    mkdir "$TMPDIR/mmrl_unzipped"
+if [ ! -d "$TMPDIR/mmrl_unzipped/$ZIPFILE_NAME" ]; then
+    mkdir -p "$TMPDIR/mmrl_unzipped/$ZIPFILE_NAME"
 fi
 
 $UNZIP $TMPDIR/$ZIPFILE_NAME.zip -d $TMPDIR/mmrl_unzipped/$ZIPFILE_NAME
@@ -78,4 +78,5 @@ else
     exit 1
 fi
 
-exec $INSTALLER_CLI # $TMPDIR/$ZIPFILE_NAME-moduled.zip
+# Do not remove! MMRL manage the install CLI
+exec $INSTALLER_CLI
