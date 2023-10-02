@@ -29,6 +29,10 @@ echo "$GREEN / /  / / /  / / _, _/ /___$RESET"
 echo "$GREEN/_/  /_/_/  /_/_/ |_/_____/$RESET"
 echo ""                        
 
+echo "\x1b[34;1m⟩⟩ \x1b[33mUsing CURL from \x1b[30m\x1b[43;1m $CURL \x1b[0m"
+echo "\x1b[34;1m⟩⟩ \x1b[33mUsing ZIP from \x1b[30m\x1b[43;1m $ZIP \x1b[0m"
+echo "\x1b[34;1m⟩⟩ \x1b[33mUsing UNZIP from \x1b[30m\x1b[43;1m $UNZIP \x1b[0m"
+
 echo "- Downloading..."
 
 ZIPFILE_NAME="$NAME-$BRANCH"
@@ -79,4 +83,4 @@ else
 fi
 
 # Do not remove! MMRL manage the install CLI
-exec $INSTALLER_CLI
+exec "$INSTALLER_CLI"

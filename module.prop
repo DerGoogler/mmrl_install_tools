@@ -1,10 +1,11 @@
 id=mmrl_install_tools
 name=MMRL Install Tools
-version=1.0.7
-versionCode=107
+version=1.0.8
+versionCode=108
 author=Der_Googler
 description=Required module if you want to install modules from Explore
 
 minApi=26
 
 mmrlCategories=Tools,System
+mmrlScreenshots=https://github.com/Googlers-Repo/googlers-repo.github.io/assets/54764558/f5b7d396-781e-463a-b4ed-dc345cc15ba3I,https://github.com/Googlers-Repo/googlers-repo.github.io/assets/54764558/0a03c54a-3064-4ed0-a69b-90db437bd9f0,https://github.com/Googlers-Repo/googlers-repo.github.io/assets/54764558/8fbc9621-fe85-4b66-8070-271599f87d38
