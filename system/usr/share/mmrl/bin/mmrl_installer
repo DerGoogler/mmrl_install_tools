@@ -83,4 +83,4 @@ else
 fi
 
 # Do not remove! MMRL manage the install CLI
-exec "$INSTALLER_CLI"
+exec $INSTALLER_CLI
