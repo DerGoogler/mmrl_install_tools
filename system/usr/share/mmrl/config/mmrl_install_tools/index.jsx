@@ -1,6 +1,6 @@
 import React from "react"
-import { Markdown, Page, Tabbar } from "mmrl-ui"
-import { useNativeProperties, useNativeStorage } from "mmrl-hooks"
+import { Markdown, Page, Tabbar } from "@mmrl/ui"
+import { useNativeProperties, useNativeStorage } from "@mmrl/hooks"
 
 function GeneralTab(props) {
   const [curl, setCurl] = useNativeProperties("persist.mmrlini.curl", "/system/usr/share/mmrl/bin/curl");
