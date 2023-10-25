@@ -1,6 +1,8 @@
-import React from "react"
-import { Markdown, Page, Tabbar } from "@mmrl/ui"
-import { useNativeProperties, useNativeStorage } from "@mmrl/hooks"
+import React from "react";
+import { Markdown, Page, Tabbar } from "@mmrl/ui";
+import { useNativeProperties, useNativeStorage } from "@mmrl/hooks";
+import { ExpandMore } from "@mui/icons-material";
+import { Typography, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 
 function GeneralTab(props) {
   const [curl, setCurl] = useNativeProperties("persist.mmrlini.curl", "/system/usr/share/mmrl/bin/curl");
@@ -76,59 +78,57 @@ function GeneralTab(props) {
   );
 }
 
-function TippsTab() {
-  const data = `# Enable Extended JSX Support
+function FaqTab() {
+  const [expanded, setExpanded] = React.useState(false);
 
-Create this file in your module folder
-
-\`\`\`shell
-touch $MODID/system/usr/share/mmrl/config/$MODID/index.jsx
-\`\`\`
-
-## Simple counter
-
-\`\`\`jsx
-import React from 'react'
- 
-function Counter() {
-  const [counter, setCounter] = React.useState(0);
- 
-  //increase counter
-  const increase = () => {
-    setCounter(count => count + 1);
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
   };
- 
-  //decrease counter
-  const decrease = () => {
-    setCounter(count => count - 1);
-  };
- 
-  //reset counter 
-  const reset = () =>{
-    setCounter(0)
-  }
- 
-  return (
-    <div className="counter">
-      <h1>React Counter</h1>
-      <span className="counter__output">{counter}</span>
-      <div className="btn__container">
-        <button className="control__btn" onClick={increase}>+</button>
-        <button className="control__btn" onClick={decrease}>-</button>
-        <button className="reset" onClick={reset}>Reset</button>
-      </div>
-    </div>
-  );
-}
-
-export default Counter
-\`\`\`
-
-`;
 
   return (
     <Page sx={{ p: 1 }}>
-      <Markdown children={data} />
+      <Accordion disableGutters expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+        >
+          <Typography>
+            Why does I need a module for installing others?
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            A modules offers <strong>fast and easy uodates</strong>, users also
+            can make changes or made a module for their self.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion disableGutters expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+        >
+          <Typography>Can I install GitHub Archives with MMRL?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Currently it isn's supported to install{" "}
+            <strong>GitHub Archives</strong> with <strong>MMRL</strong>. It is
+            planned that you can install <strong>GitHub Archives</strong> with{" "}
+            <strong>MMRL</strong>.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion disableGutters expanded={expanded === 'panel_latest'} onChange={handleChange('panel_latest')}>
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+        >
+          <Typography>Comes more FAQs in the future?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            We always add new FAQs, but this question is always the latest.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
     </Page>
   );
 }
@@ -150,8 +150,8 @@ function InstallToolsConfig() {
         tab: <Tabbar.Tab label='General' />
       },
       {
-        content: <TippsTab />,
-        tab: <Tabbar.Tab label='JSX Support' />
+        content: <FaqTab />,
+        tab: <Tabbar.Tab label='FAQ' />
       }
     ];
   }
