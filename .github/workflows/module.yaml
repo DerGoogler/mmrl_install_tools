@@ -20,14 +20,11 @@ jobs:
         shell: bash
         run: |
           get_prop() { sed -n "s|^$1=||p" "module.prop"; }
-          ID=$(get_prop "id")
-          FILE_NAME="$ID-release"
-          FILE_NAME_ZIP="$FILE_NAME.zip"
-          zip -9 -r "$FILE_NAME_ZIP" * -x ".git"
+          zip -9 -r "$(get_prop "id").zip" * -x ".git"
           
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-            files: '*-release.zip'
+            files: '*.zip'
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
