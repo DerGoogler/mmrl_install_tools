@@ -19,12 +19,11 @@ jobs:
       - name: Make
         shell: bash
         run: |
-          get_prop() { sed -n "s|^$1=||p" "module.prop"; }
-          zip -9 -r "$(get_prop "id").zip" * -x ".git"
+          zip -9 -r "module.zip" * -x ".git"
           
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-            files: '*.zip'
+            files: 'module.zip'
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
