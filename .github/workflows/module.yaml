@@ -28,7 +28,7 @@ jobs:
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-            files: ${{ github.workspace }}/*-release.zip
+            files: '*-release.zip'
             draft: true
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
