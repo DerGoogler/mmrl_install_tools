@@ -1,0 +1,41 @@
+name: Build Magisk/KernelSU Module
+
+on:
+  push:
+    tags: [ v*.*.* ]
+
+jobs:
+  build:
+    name: Build Module
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Apt Dependencies
+        run: |
+          sudo apt update -y && sudo apt upgrade -y
+          sudo apt install zip unzip -y
+
+      - name: Make
+        shell: bash
+        run: |
+          get_prop() { sed -n "s|^$1=||p" "module.prop"; }
+          ID=$(get_prop "id")
+          FILE_NAME="$ID-release"
+          FILE_NAME_ZIP="$FILE_NAME.zip"
+          zip -9 -r "$FILE_NAME_ZIP" * -x ".git"
+  
+  deploy:
+      name: Deploy
+      needs: [ build ]
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+  
+        - name: Publish
+          uses: softprops/action-gh-release@v1
+          with:
+              files: '*-release.zip'
+              draft: true
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
