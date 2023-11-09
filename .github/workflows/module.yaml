@@ -19,7 +19,7 @@ jobs:
       - name: Make
         shell: bash
         run: |
-          zip -9 -r "module.zip" * -x ".git" -x "README.md"
+          zip -r "module.zip" * -x ".git" -x "README.md"
           
       - name: Publish
         uses: softprops/action-gh-release@v1
