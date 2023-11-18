@@ -1,10 +1,15 @@
 #!/system/bin/sh
-SCOPE="mmrlini"
+set -e
+SCOPE="mmrlini_v2"
 source /system/etc/mkshrc
 
-CURL=$(getprop "persist.$SCOPE.curl" "/system/usr/share/mmrl/bin/curl")
-ZIP=$(getprop "persist.$SCOPE.zip" "/system/usr/share/mmrl/bin/zip")
-UNZIP=$(getprop "persist.$SCOPE.unzip" "/system/bin/unzip")
+function getconf {
+  /system/bin/getprop "$1" "$2" | sed 's/^"\(.*\)"$/\1/'
+}
+
+CURL=$(getconf "persist.$SCOPE.curl" "/system/usr/share/mmrl/bin/curl")
+ZIP=$(getconf "persist.$SCOPE.zip" "/system/usr/share/mmrl/bin/zip")
+UNZIP=$(getconf "persist.$SCOPE.unzip" "/system/bin/unzip")
 
 # Systemless Mkshrc could affect this
 TMPDIR="/data/local/tmp"
