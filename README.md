@@ -2,9 +2,11 @@
 [Magisk]: https://github.com/topjohnwu/Magisk
 [KernelSU]: https://kernelsu.org
 
-# [MMRL][MMRL] Install Tools
+# MMRL Install Tools
 
 Required module if you want to install modules from Explore
+
+<img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Googlers-Repo/mmrl_install_tools/total">
 
 ## Installation
 
