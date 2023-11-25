@@ -165,6 +165,8 @@ set_permissions() {
     set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_installer 0 0 0755
     set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_explore_install 0 0 0755
     set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_local_install 0 0 0755
+    set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_explore_install_v2 0 0 0755
+    set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_local_install_v2 0 0 0755
     # Here are some examples:
     # set_perm_recursive  $MODPATH/system/lib       0     0       0755      0644
     # set_perm  $MODPATH/system/bin/app_process32   0     2000    0755      u:object_r:zygote_exec:s0
