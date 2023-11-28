@@ -2,11 +2,13 @@ import React from "react";
 import { Page } from "@mmrl/ui";
 import { useNativeProperties } from "@mmrl/hooks";
 
+const scope = "mmrlini_v2";
+
 function GeneralTab(props) {
-    const [curl, setCurl] = useNativeProperties("persist.mmrlini.curl", "/system/usr/share/mmrl/bin/curl");
-    const [zip, setZip] = useNativeProperties("persist.mmrlini.zip", "/system/usr/share/mmrl/bin/zip");
-    const [unzip, setUnzip] = useNativeProperties("persist.mmrlini.unzip", "/system/bin/unzip");
-    const [installFolder, setInstallFolder] = useNativeProperties("persist.mmrlini.install_folder", "/data/local/tmp/<NAME>-<BRANCH>-moduled.zip");
+    const [curl, setCurl] = useNativeProperties(`persist.${scope}.curl`, "/system/usr/share/mmrl/bin/curl");
+    const [zip, setZip] = useNativeProperties(`persist.${scope}.zip`, "/system/usr/share/mmrl/bin/zip");
+    const [unzip, setUnzip] = useNativeProperties(`persist.${scope}.unzip`, "/system/bin/unzip");
+    const [installFolder, setInstallFolder] = useNativeProperties(`persist.${scope}.install_folder`, "/data/local/tmp/<NAME>-<BRANCH>-moduled.zip");
 
     return (
         <Page sx={{ p: 0 }}>
