@@ -21,7 +21,8 @@ Pick the latest [release](https://github.com/Googlers-Repo/mmrl_install_tools/re
 ```shell
 # Magisk
 xh -d "https://github.com/Googlers-Repo/mmrl_install_tools/releases/latest/download/module.zip" -o "/data/local/tmp/mmrl_install_tools.zip" && /system/bin/magisk --install-module "/data/local/tmp/mmrl_install_tools.zip"
-
+```
+```shell
 # KernelSU
 xh -d "https://github.com/Googlers-Repo/mmrl_install_tools/releases/latest/download/module.zip" -o "/data/local/tmp/mmrl_install_tools.zip" && /data/adb/ksu/bin/ksud module install "/data/local/tmp/mmrl_install_tools.zip"
 ```
@@ -31,7 +32,8 @@ cURL
 ```shell
 # Magisk
 curl -L "https://github.com/Googlers-Repo/mmrl_install_tools/releases/latest/download/module.zip" --output "/data/local/tmp/mmrl_install_tools.zip" && /system/bin/magisk --install-module "/data/local/tmp/mmrl_install_tools.zip"
-
+```
+```shell
 # KernelSU
 curl -L "https://github.com/Googlers-Repo/mmrl_install_tools/releases/latest/download/module.zip" --output "/data/local/tmp/mmrl_install_tools.zip" && /data/adb/ksu/bin/ksud module install "/data/local/tmp/mmrl_install_tools.zip"
 ```
