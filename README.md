@@ -14,26 +14,28 @@ Pick the latest [release](https://github.com/Googlers-Repo/mmrl_install_tools/re
 
 > You also able to configure the module within [MMRL][MMRL]
 
-### Install scripts
+# Install scripts
 
-<a module="xhhttp" href="https://github.com/Magisk-Modules-Alt-Repo/xhhttp">xh</a>
+## <a module="xhhttp" href="https://github.com/Magisk-Modules-Alt-Repo/xhhttp">xh</a>
 
+### Magisk
 ```shell
-# Magisk
 xh -d "https://github.com/Googlers-Repo/mmrl_install_tools/releases/latest/download/module.zip" -o "/data/local/tmp/mmrl_install_tools.zip" && /system/bin/magisk --install-module "/data/local/tmp/mmrl_install_tools.zip"
 ```
+
+### KernelSU
 ```shell
-# KernelSU
 xh -d "https://github.com/Googlers-Repo/mmrl_install_tools/releases/latest/download/module.zip" -o "/data/local/tmp/mmrl_install_tools.zip" && /data/adb/ksu/bin/ksud module install "/data/local/tmp/mmrl_install_tools.zip"
 ```
 
-cURL
+## cURL
 
+### Magisk
 ```shell
-# Magisk
 curl -L "https://github.com/Googlers-Repo/mmrl_install_tools/releases/latest/download/module.zip" --output "/data/local/tmp/mmrl_install_tools.zip" && /system/bin/magisk --install-module "/data/local/tmp/mmrl_install_tools.zip"
 ```
+
+### KernelSU
 ```shell
-# KernelSU
 curl -L "https://github.com/Googlers-Repo/mmrl_install_tools/releases/latest/download/module.zip" --output "/data/local/tmp/mmrl_install_tools.zip" && /data/adb/ksu/bin/ksud module install "/data/local/tmp/mmrl_install_tools.zip"
 ```
