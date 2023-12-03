@@ -43,6 +43,18 @@ function FaqTab() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+      <Accordion disableGutters expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+        >
+          <Typography>Why are the extra arguments disabled?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            There is currently no valid way to pass them down to the command.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
       <Accordion disableGutters expanded={expanded === 'panel_latest'} onChange={handleChange('panel_latest')}>
         <AccordionSummary
           expandIcon={<ExpandMore />}
