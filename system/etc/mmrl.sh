@@ -10,9 +10,9 @@ CURL=$(getconf "persist.$SCOPE.curl" "/system/usr/share/mmrl/bin/curl")
 ZIP=$(getconf "persist.$SCOPE.zip" "/system/usr/share/mmrl/bin/zip")
 UNZIP=$(getconf "persist.$SCOPE.unzip" "/system/bin/unzip")
 
-EXTRA_CURL_ARGS=$(getconf "persist.$SCOPE.curl.args" "-L")
-EXTRA_ZIP_ARGS=$(getconf "persist.$SCOPE.zip.args" "-r")
-EXTRA_UNZIP_ARGS=$(getconf "persist.$SCOPE.unzip.args" "-qq")
+EXTRA_CURL_ARGS=$(getconf "persist.$SCOPE.curl.args" " -L")
+EXTRA_ZIP_ARGS=$(getconf "persist.$SCOPE.zip.args" " -r")
+EXTRA_UNZIP_ARGS=$(getconf "persist.$SCOPE.unzip.args" " -qq")
 
 GREEN="\x1b[32m"
 RED="\x1b[31m"
