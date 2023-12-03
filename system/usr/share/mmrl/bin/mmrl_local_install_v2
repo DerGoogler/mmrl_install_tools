@@ -1,15 +1,6 @@
 #!/system/bin/sh
 set -e
-SCOPE="mmrlini_v2"
-source /system/etc/mkshrc
-
-function getconf {
-  /system/bin/getprop "$1" "$2" | sed 's/^"\(.*\)"$/\1/'
-}
-
-CURL=$(getconf "persist.$SCOPE.curl" "/system/usr/share/mmrl/bin/curl")
-ZIP=$(getconf "persist.$SCOPE.zip" "/system/usr/share/mmrl/bin/zip")
-UNZIP=$(getconf "persist.$SCOPE.unzip" "/system/bin/unzip")
+source /system/etc/mmrl.sh
 
 # Systemless Mkshrc could affect this
 TMPDIR="/data/local/tmp"
@@ -21,20 +12,6 @@ cd $TMPDIR
 # $ROOTMANAGER - "Magisk" or "KernelSU"
 # $MSUCLI - Magisk CLI
 # $KSUCLI - KernelSU CLI
-
-GREEN="\x1b[32m"
-RED="\x1b[31m"
-CYAN="\x1b[96m"
-YELLOW="\x1b[93m"
-UNDERLINE="\x1b[4m"
-RESET="\x1b[0m"
-
-echo "$GREEN    __  _____  _______  __ $RESET"
-echo "$GREEN   /  |/  /  |/  / __ \/ / $RESET"
-echo "$GREEN  / /|_/ / /|_/ / /_/ / /  $RESET"
-echo "$GREEN / /  / / /  / / _, _/ /___$RESET"
-echo "$GREEN/_/  /_/_/  /_/_/ |_/_____/$RESET"
-echo ""
 
 function install_cli {
    set +e
@@ -66,7 +43,7 @@ else
       mkdir -p "$TMPDIR/mmrl_unzipped/$FILENAME"
    fi
 
-   $UNZIP "$ZIPFILE" -d "$TMPDIR/mmrl_unzipped/$FILENAME"
+   $UNZIP $EXTRA_UNZIP_ARGS "$ZIPFILE" -d "$TMPDIR/mmrl_unzipped/$FILENAME"
 
    if [ $(echo $?) -eq 0 ]; then
       echo "$GREEN- Successful decompressed$RESET"
@@ -86,7 +63,7 @@ else
    echo "- Rezipping to a valid archive..."
 
    cd "$TMPDIR/mmrl_unzipped/$FILENAME/$FILENAME"
-   $ZIP -r "$TMPDIR/$FILENAME-moduled.zip" *
+   $ZIP $EXTRA_ZIP_ARGS "$TMPDIR/$FILENAME-moduled.zip" *
    cd $TMPDIR
 
    if [ $(echo $?) -eq 0 ]; then

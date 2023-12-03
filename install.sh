@@ -160,6 +160,8 @@ on_install() {
 set_permissions() {
     # The following is the default rule, DO NOT remove
     set_perm_recursive $MODPATH 0 0 0755 0644
+
+    set_perm $MODPATH/system/etc/mmrl.sh 0 0 0644
     set_perm $MODPATH/system/usr/share/mmrl/bin/curl 0 0 0755
     set_perm $MODPATH/system/usr/share/mmrl/bin/zip 0 0 0755
     set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_installer 0 0 0755
