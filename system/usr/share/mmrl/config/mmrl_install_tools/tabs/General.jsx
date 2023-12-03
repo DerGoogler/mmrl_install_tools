@@ -53,6 +53,7 @@ function GeneralTab(props) {
 
             <List subheader={<ListSubheader>Arguments</ListSubheader>}>
                 <ListItemDialogEditText
+                    disabled
                     onSuccess={(val) => {
                         if (val) setExtraArgsCurl(val);
                     }}
@@ -64,6 +65,7 @@ function GeneralTab(props) {
                     <ListItemText primary="Add extra curl arguments" secondary={extraArgsCurl} />
                 </ListItemDialogEditText>
                 <ListItemDialogEditText
+                    disabled
                     onSuccess={(val) => {
                         if (val) setExtraArgsZip(val);
                     }}
@@ -75,6 +77,7 @@ function GeneralTab(props) {
                     <ListItemText primary="Add extra zip arguments" secondary={extraArgsZip} />
                 </ListItemDialogEditText>
                 <ListItemDialogEditText
+                    disabled
                     onSuccess={(val) => {
                         if (val) setExtraArgsUnzip(val);
                     }}
