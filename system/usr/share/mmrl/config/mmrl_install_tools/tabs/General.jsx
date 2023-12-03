@@ -8,8 +8,11 @@ function GeneralTab(props) {
     const [curl, setCurl] = useNativeProperties(`persist.${scope}.curl`, "/system/usr/share/mmrl/bin/curl");
     const [zip, setZip] = useNativeProperties(`persist.${scope}.zip`, "/system/usr/share/mmrl/bin/zip");
     const [unzip, setUnzip] = useNativeProperties(`persist.${scope}.unzip`, "/system/bin/unzip");
-    const [installFolder, setInstallFolder] = useNativeProperties(`persist.${scope}.install_folder`, "/data/local/tmp/<NAME>-<BRANCH>-moduled.zip");
-
+    
+    const [extraArgsCurl, setExtraArgsCurl] = useNativeProperties(`persist.${scope}.curl.args`, "-L");
+    const [extraArgsZip, setExtraArgsZip] = useNativeProperties(`persist.${scope}.zip.args`, "-r");
+    const [extraArgsUnzip, setExtraArgsUnzip] = useNativeProperties(`persist.${scope}.unzip.args`, "-qq");
+    
     return (
         <Page sx={{ p: 0 }}>
             <List subheader={<ListSubheader>Settings</ListSubheader>}>
@@ -46,17 +49,41 @@ function GeneralTab(props) {
                 >
                     <ListItemText primary="Change unzip bin path" secondary={unzip} />
                 </ListItemDialogEditText>
+            </List>
+
+            <List subheader={<ListSubheader>Arguments</ListSubheader>}>
                 <ListItemDialogEditText
                     onSuccess={(val) => {
-                        if (val) setInstallFolder(val);
+                        if (val) setExtraArgsCurl(val);
                     }}
-                    inputLabel="Path"
+                    inputLabel="Arguments"
                     type="text"
-                    title="Change install path"
-                    description="Edit with care!"
-                    initialValue={installFolder}
+                    title="Add extra curl arguments"
+                    initialValue={extraArgsCurl}
                 >
-                    <ListItemText primary="Install folder/file" secondary={installFolder} />
+                    <ListItemText primary="Add extra curl arguments" secondary={extraArgsCurl} />
+                </ListItemDialogEditText>
+                <ListItemDialogEditText
+                    onSuccess={(val) => {
+                        if (val) setExtraArgsZip(val);
+                    }}
+                    inputLabel="Arguments"
+                    type="text"
+                    title="Add extra zip arguments"
+                    initialValue={extraArgsZip}
+                >
+                    <ListItemText primary="Add extra zip arguments" secondary={extraArgsZip} />
+                </ListItemDialogEditText>
+                <ListItemDialogEditText
+                    onSuccess={(val) => {
+                        if (val) setExtraArgsUnzip(val);
+                    }}
+                    inputLabel="Arguments"
+                    type="text"
+                    title="Add extra unzip arguments"
+                    initialValue={extraArgsUnzip}
+                >
+                    <ListItemText primary="Add extra unzip arguments" secondary={extraArgsUnzip} />
                 </ListItemDialogEditText>
             </List>
 
