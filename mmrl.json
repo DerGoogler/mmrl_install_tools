@@ -11,5 +11,9 @@
         "Tools",
         "System",
         "Configurable"
-    ]
+    ],
+    "developerNote": {
+        "severity": "info",
+        "note": "First installation? Then please install GitHub release first."
+    }
 }
