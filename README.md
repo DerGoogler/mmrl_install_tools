@@ -8,6 +8,11 @@ Required module if you want to install modules from Explore
 
 <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Googlers-Repo/mmrl_install_tools/total">
 
+## Included features
+
+- Configuing MMRL's installer
+- Logcat logger for MMRL
+
 ## Installation
 
 Pick the latest [release](https://github.com/Googlers-Repo/mmrl_install_tools/releases/) and install it via your root manager (e.g. [Magisk][Magisk] or [KernelSU][KernelSU]). After a reboot you can install modules via [MMRL][MMRL].
