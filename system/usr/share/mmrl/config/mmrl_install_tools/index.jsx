@@ -300,7 +300,7 @@ function TerminalActivity() {
     setFontSize(Number(newValue));
   };
 
-  const startLog = () => {
+  const startLog = React.useMemo(() => {
     const envp = {
       PACKAGENAME: BuildConfig.APPLICATION_ID,
     };
@@ -313,7 +313,7 @@ function TerminalActivity() {
       },
       onExit: (code) => { },
     });
-  };
+  }, []);
 
   return (
     <Page
