@@ -38,7 +38,7 @@ install_cli() {
       exec $MSUCLI --install-module "$1"
    elif [ "$ROOTMANAGER" = "KernelSU" ]; then
       exec $KSUCLI module install "$1"
-   elif [ "$ROOTMANAGER" = "APatch" ]; then
+   elif [ "$ROOTMANAGER" = "APatchSU" ]; then
       exec $ASUCLI module install "$1"
    elif [ "$ROOTMANAGER" = "Unknown" ]; then
       echo "- Unable to find root manager"
