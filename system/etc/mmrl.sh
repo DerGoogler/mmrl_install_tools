@@ -8,7 +8,7 @@ function getconf {
   /system/bin/getprop "$1" "$2" | sed 's/^"\(.*\)"$/\1/'
 }
 
-SCOPE="mmrlini_v3"
+SCOPE="mmrlini_v4"
 
 CURL=$(getconf "persist.$SCOPE.curl" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/curl")
 ZIP=$(getconf "persist.$SCOPE.zip" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/zip")
