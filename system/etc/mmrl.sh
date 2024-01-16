@@ -12,7 +12,7 @@ SCOPE="mmrlini_v4"
 
 CURL=$(getconf "persist.$SCOPE.curl" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/curl")
 ZIP=$(getconf "persist.$SCOPE.zip" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/zip")
-UNZIP=$(getconf "persist.$SCOPE.unzip" "$MODULES/mmrl_install_tools/system/bin/unzip")
+UNZIP=$(getconf "persist.$SCOPE.unzip" "/system/bin/unzip")
 
 EXTRA_CURL_ARGS=$(getconf "persist.$SCOPE.curl.args" " -L")
 EXTRA_ZIP_ARGS=$(getconf "persist.$SCOPE.zip.args" " -r")
