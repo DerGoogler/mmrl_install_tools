@@ -2,10 +2,6 @@
 set -e
 source $MODULES/mmrl_install_tools/system/etc/mmrl.sh
 
-# Systemless Mkshrc could affect this
-TMPDIR="/data/local/tmp"
-cd $TMPDIR
-
 FILENAME="$TMPDIR/$NAME"
 
 download_file() {
