@@ -1,10 +1,14 @@
 # This API is only for module install scripts
 
+# Systemless Mkshrc could affect this
+TMPDIR="/data/local/tmp"
+cd $TMPDIR
+
 function getconf {
   /system/bin/getprop "$1" "$2" | sed 's/^"\(.*\)"$/\1/'
 }
 
-SCOPE="mmrlini_v3"
+SCOPE="mmrlini_v4"
 
 CURL=$(getconf "persist.$SCOPE.curl" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/curl")
 ZIP=$(getconf "persist.$SCOPE.zip" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/zip")
@@ -27,24 +31,27 @@ echo "$GREEN  / /|_/ / /|_/ / /_/ / /  $RESET"
 echo "$GREEN / /  / / /  / / _, _/ /___$RESET"
 echo "$GREEN/_/  /_/_/  /_/_/ |_/_____/$RESET"
 echo ""
+echo "Using version $CYAN$MMRL_VER$RESET"
 
-# $ROOTMANAGER - "Magisk", "KernelSU" or "APatch"
-# $MSUCLI - Magisk CLI
-# $KSUCLI - KernelSU CLI
-# $ASUCLI - APatch CLI
 
 install_cli() {
-   if [ "$ROOTMANAGER" = "Magisk" ]; then
-      exec $MSUCLI --install-module "$1"
-   elif [ "$ROOTMANAGER" = "KernelSU" ]; then
-      exec $KSUCLI module install "$1"
-   elif [ "$ROOTMANAGER" = "APatchSU" ]; then
-      exec $ASUCLI module install "$1"
-   elif [ "$ROOTMANAGER" = "Unknown" ]; then
-      echo "- Unable to find root manager"
-      exit 1
-   else
-      echo "- Install error"
-      exit 1
-   fi
+   case "$ROOTMANAGER" in
+      "Magisk")
+         exec $MSUCLI --install-module "$FILENAME.zip"
+         ;;
+     "KernelSU")
+         exec $KSUCLI module install "$FILENAME.zip"
+         ;;
+     "APatchSU")
+         exec $ASUCLI module install "$FILENAME.zip"
+         ;;
+      "Unknown")
+         echo "! Unable to find root manager"
+         exit 1
+         ;;
+     *)
+         echo "! Install error"
+         exit 1
+         ;;
+   esac
 }
