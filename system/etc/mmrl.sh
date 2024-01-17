@@ -37,13 +37,13 @@ echo "Using version $CYAN$MMRL_VER$RESET"
 install_cli() {
    case "$ROOTMANAGER" in
       "Magisk")
-         exec $MSUCLI --install-module "$FILENAME.zip"
+         exec $MSUCLI --install-module "$1"
          ;;
      "KernelSU")
-         exec $KSUCLI module install "$FILENAME.zip"
+         exec $KSUCLI module install "$1"
          ;;
      "APatchSU")
-         exec $ASUCLI module install "$FILENAME.zip"
+         exec $ASUCLI module install "$1"
          ;;
       "Unknown")
          echo "! Unable to find root manager"
