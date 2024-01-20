@@ -29,7 +29,7 @@ function GeneralTab(props) {
   const [curl, setCurl] = useNativeProperties(`persist.${scope}.curl`, "/system/usr/share/mmrl/bin/curl");
   const [zip, setZip] = useNativeProperties(`persist.${scope}.zip`, "/system/usr/share/mmrl/bin/zip");
   const [unzip, setUnzip] = useNativeProperties(`persist.${scope}.unzip`, "/system/bin/unzip");
-  const [clearTerminal, setClearTerminal] = useNativeProperties(`persist.${scope}.unzip`, true);
+  const [clearTerminal, setClearTerminal] = useNativeProperties(`persist.${scope}.clear_terminal`, true);
 
   const [extraArgsCurl, setExtraArgsCurl] = useNativeProperties(`persist.${scope}.curl.args`, "-L");
   const [extraArgsZip, setExtraArgsZip] = useNativeProperties(`persist.${scope}.zip.args`, "-r");

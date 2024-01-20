@@ -9,7 +9,7 @@ function getconf {
 }
 
 function mmrl {
-    echo "$(echo "#!mmrl:$@")"
+    echo "#!mmrl:$@"
 }
 
 SCOPE="mmrlini_v4"
