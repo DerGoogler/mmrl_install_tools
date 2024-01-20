@@ -23,12 +23,13 @@ import {
 import BuildConfig from "@mmrl/buildconfig";
 import Terminal from "@mmrl/terminal";
 
-const scope = "mmrlini_v2";
+const scope = "mmrlini_v4";
 
 function GeneralTab(props) {
   const [curl, setCurl] = useNativeProperties(`persist.${scope}.curl`, "/system/usr/share/mmrl/bin/curl");
   const [zip, setZip] = useNativeProperties(`persist.${scope}.zip`, "/system/usr/share/mmrl/bin/zip");
   const [unzip, setUnzip] = useNativeProperties(`persist.${scope}.unzip`, "/system/bin/unzip");
+  const [clearTerminal, setClearTerminal] = useNativeProperties(`persist.${scope}.unzip`, true);
 
   const [extraArgsCurl, setExtraArgsCurl] = useNativeProperties(`persist.${scope}.curl.args`, "-L");
   const [extraArgsZip, setExtraArgsZip] = useNativeProperties(`persist.${scope}.zip.args`, "-r");
@@ -64,6 +65,10 @@ function GeneralTab(props) {
       </Card>
 
       <List subheader={<ListSubheader>Settings</ListSubheader>}>
+        <ListItem>
+          <ListItemText primary="Clear terminal" secondary="Clears the terminal after the download" />
+          <Switch checked={clearTerminal} onChange={(e) => setClearTerminal(e.target.checked)} />
+        </ListItem>
         <ListItemDialogEditText
           onSuccess={(val) => {
             if (val) setCurl(val);

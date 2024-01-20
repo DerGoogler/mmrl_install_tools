@@ -9,6 +9,9 @@ download_file() {
 
     if [ $(echo $?) -eq 0 ]; then
         echo "$GREEN- Successful downloaded $NAME$RESET"
+        if [ "$CLEAR_TERMINAL_AFTER_DL" = "true" ]; then
+          mmrl clearTerminal
+        fi
     else
         echo "$RED! Something went wrong$RESET"
         exit 1

@@ -8,11 +8,16 @@ function getconf {
   /system/bin/getprop "$1" "$2" | sed 's/^"\(.*\)"$/\1/'
 }
 
+function mmrl {
+    echo "$(echo "#!mmrl:$@")"
+}
+
 SCOPE="mmrlini_v4"
 
 CURL=$(getconf "persist.$SCOPE.curl" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/curl")
 ZIP=$(getconf "persist.$SCOPE.zip" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/zip")
 UNZIP=$(getconf "persist.$SCOPE.unzip" "/system/bin/unzip")
+CLEAR_TERMINAL_AFTER_DL=$(getconf "persist.$SCOPE.clear_terminal" "true")
 
 EXTRA_CURL_ARGS=$(getconf "persist.$SCOPE.curl.args" " -L")
 EXTRA_ZIP_ARGS=$(getconf "persist.$SCOPE.zip.args" " -r")
