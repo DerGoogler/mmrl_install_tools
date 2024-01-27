@@ -31,8 +31,52 @@ echo "$GREEN/_/  /_/_/  /_/_/ |_/_____/$RESET"
 echo ""
 echo "Using version $CYAN$MMRL_VER$RESET"
 
+install_cli() {
+   case "$ROOTMANAGER" in
+      "Magisk")
+         exec $MSUCLI --install-module "$1"
+         ;;
+      "KernelSU")
+         exec $KSUCLI module install "$1"
+         ;;
+      "APatchSU")
+         exec $ASUCLI module install "$1"
+         ;;
+      "Unknown")
+         echo "! Unable to find root manager"
+         exit 1
+         ;;
+      *)
+         echo "! Install error"
+         exit 1
+         ;;
+   esac
+}
+
+bb() {
+   case "$ROOTMANAGER" in
+      "Magisk")
+         exec $MSUBSU $@
+         ;;
+      "KernelSU")
+         exec $KSUBSU $@
+         ;;
+      "APatchSU")
+         exec $ASUBSU $@
+         ;;
+      "Unknown")
+         echo "! Unable to find busybox"
+         exit 1
+         ;;
+      *)
+         echo "! busybox error"
+         exit 1
+         ;;
+   esac
+}
+
 download_file() {
-    $CURL $EXTRA_CURL_ARGS $URL --output "$1"
+    bb wget $EXTRA_WGET_ARGS $URL -O "$1"
 
     if [ $(echo $?) -eq 0 ]; then
         echo "$GREEN- Successful downloaded $NAME$RESET"
@@ -43,26 +87,4 @@ download_file() {
         echo "$RED! Something went wrong$RESET"
         exit 1
     fi
-}
-
-install_cli() {
-   case "$ROOTMANAGER" in
-      "Magisk")
-         exec $MSUCLI --install-module "$1"
-         ;;
-     "KernelSU")
-         exec $KSUCLI module install "$1"
-         ;;
-     "APatchSU")
-         exec $ASUCLI module install "$1"
-         ;;
-      "Unknown")
-         echo "! Unable to find root manager"
-         exit 1
-         ;;
-     *)
-         echo "! Install error"
-         exit 1
-         ;;
-   esac
 }
