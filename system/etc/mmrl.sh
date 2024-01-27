@@ -12,16 +12,9 @@ function mmrl {
     echo "#!mmrl:$@"
 }
 
-SCOPE="mmrlini_v4"
-
-CURL=$(getconf "persist.$SCOPE.curl" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/curl")
-ZIP=$(getconf "persist.$SCOPE.zip" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/zip")
-UNZIP=$(getconf "persist.$SCOPE.unzip" "/system/bin/unzip")
+SCOPE="mmrlini_v5"
 CLEAR_TERMINAL_AFTER_DL=$(getconf "persist.$SCOPE.clear_terminal" "true")
-
-EXTRA_CURL_ARGS=$(getconf "persist.$SCOPE.curl.args" " -L")
-EXTRA_ZIP_ARGS=$(getconf "persist.$SCOPE.zip.args" " -r")
-EXTRA_UNZIP_ARGS=$(getconf "persist.$SCOPE.unzip.args" " -qq")
+EXTRA_WGET_ARGS=$(getconf "persist.$SCOPE.wget.args" " ")
 
 GREEN="\x1b[32m"
 RED="\x1b[31m"
@@ -38,6 +31,19 @@ echo "$GREEN/_/  /_/_/  /_/_/ |_/_____/$RESET"
 echo ""
 echo "Using version $CYAN$MMRL_VER$RESET"
 
+download_file() {
+    $CURL $EXTRA_CURL_ARGS $URL --output "$1"
+
+    if [ $(echo $?) -eq 0 ]; then
+        echo "$GREEN- Successful downloaded $NAME$RESET"
+        if [ "$CLEAR_TERMINAL_AFTER_DL" = "true" ]; then
+          mmrl clearTerminal
+        fi
+    else
+        echo "$RED! Something went wrong$RESET"
+        exit 1
+    fi
+}
 
 install_cli() {
    case "$ROOTMANAGER" in

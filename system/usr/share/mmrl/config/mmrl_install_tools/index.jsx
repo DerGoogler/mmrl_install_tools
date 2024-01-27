@@ -6,7 +6,7 @@ import {
   useActivity,
   useSettings
 } from "@mmrl/hooks";
-import { ExpandMore, Add, Remove } from "@mui/icons-material";
+import { ExpandMore, Add, Remove, Save } from "@mui/icons-material";
 import {
   Typography,
   Accordion,
@@ -22,18 +22,13 @@ import {
 } from "@mui/material";
 import BuildConfig from "@mmrl/buildconfig";
 import Terminal from "@mmrl/terminal";
+import { write } from "@mmrl/sufiile"
 
 const scope = "mmrlini_v4";
 
 function GeneralTab(props) {
-  const [curl, setCurl] = useNativeProperties(`persist.${scope}.curl`, "/system/usr/share/mmrl/bin/curl");
-  const [zip, setZip] = useNativeProperties(`persist.${scope}.zip`, "/system/usr/share/mmrl/bin/zip");
-  const [unzip, setUnzip] = useNativeProperties(`persist.${scope}.unzip`, "/system/bin/unzip");
   const [clearTerminal, setClearTerminal] = useNativeProperties(`persist.${scope}.clear_terminal`, true);
-
-  const [extraArgsCurl, setExtraArgsCurl] = useNativeProperties(`persist.${scope}.curl.args`, "-L");
-  const [extraArgsZip, setExtraArgsZip] = useNativeProperties(`persist.${scope}.zip.args`, "-r");
-  const [extraArgsUnzip, setExtraArgsUnzip] = useNativeProperties(`persist.${scope}.unzip.args`, "-qq");
+  const [extraArgsWget, setExtraArgsWget] = useNativeProperties(`persist.${scope}.wget.args`, "");
 
   const { context } = useActivity();
 
@@ -69,85 +64,27 @@ function GeneralTab(props) {
           <ListItemText primary="Clear terminal" secondary="Clears the terminal after the download" />
           <Switch checked={clearTerminal} onChange={(e) => setClearTerminal(e.target.checked)} />
         </ListItem>
-        <ListItemDialogEditText
-          onSuccess={(val) => {
-            if (val) setCurl(val);
-          }}
-          inputLabel="Path"
-          type="text"
-          title="Change curl bin path"
-          initialValue={curl}
-        >
-          <ListItemText primary="Change curl bin path" secondary={curl} />
-        </ListItemDialogEditText>
-        <ListItemDialogEditText
-          onSuccess={(val) => {
-            if (val) setZip(val);
-          }}
-          inputLabel="Path"
-          type="text"
-          title="Change zip bin path"
-          initialValue={zip}
-        >
-          <ListItemText primary="Change zip bin path" secondary={zip} />
-        </ListItemDialogEditText>
-        <ListItemDialogEditText
-          onSuccess={(val) => {
-            if (val) setUnzip(val);
-          }}
-          inputLabel="Path"
-          type="text"
-          title="Change unzip bin path"
-          initialValue={unzip}
-        >
-          <ListItemText primary="Change unzip bin path" secondary={unzip} />
-        </ListItemDialogEditText>
+        <ListItem>
+          <ListItemText primary="Swipeable tabs" secondary="Enables swipe between tabs" />
+          <Switch checked={props.swipeable} onChange={(e) => props.setSwipeable(e.target.checked)} />
+        </ListItem>
       </List>
+
+      <Divider />
 
       <List subheader={<ListSubheader>Arguments</ListSubheader>}>
         <ListItemDialogEditText
           disabled
           onSuccess={(val) => {
-            if (val) setExtraArgsCurl(val);
+            if (val) setExtraArgsWget(val);
           }}
           inputLabel="Arguments"
           type="text"
-          title="Add extra curl arguments"
-          initialValue={extraArgsCurl}
+          title="Add extra wget arguments"
+          initialValue={extraArgsWget}
         >
-          <ListItemText primary="Add extra curl arguments" secondary={extraArgsCurl} />
+          <ListItemText primary="Add extra wget arguments" secondary={extraArgsWget} />
         </ListItemDialogEditText>
-        <ListItemDialogEditText
-          disabled
-          onSuccess={(val) => {
-            if (val) setExtraArgsZip(val);
-          }}
-          inputLabel="Arguments"
-          type="text"
-          title="Add extra zip arguments"
-          initialValue={extraArgsZip}
-        >
-          <ListItemText primary="Add extra zip arguments" secondary={extraArgsZip} />
-        </ListItemDialogEditText>
-        <ListItemDialogEditText
-          disabled
-          onSuccess={(val) => {
-            if (val) setExtraArgsUnzip(val);
-          }}
-          inputLabel="Arguments"
-          type="text"
-          title="Add extra unzip arguments"
-          initialValue={extraArgsUnzip}
-        >
-          <ListItemText primary="Add extra unzip arguments" secondary={extraArgsUnzip} />
-        </ListItemDialogEditText>
-      </List>
-
-      <List subheader={<ListSubheader>Config</ListSubheader>}>
-        <ListItem>
-          <ListItemText primary="Swipeable tabs" secondary="Enables swipe between tabs" />
-          <Switch checked={props.swipeable} onChange={(e) => props.setSwipeable(e.target.checked)} />
-        </ListItem>
       </List>
 
       <Divider />
@@ -285,6 +222,10 @@ function TerminalActivity() {
     setLines((lines) => [...lines, line]);
   };
 
+  const saveLog = () => {
+    write("/data/adb/mmrl.log", lines.join("\n"))
+  }
+
   const renderToolbar = () => {
     return (
       <Toolbar>
@@ -294,9 +235,9 @@ function TerminalActivity() {
         <Toolbar.Center>
           Logs
         </Toolbar.Center>
-        {/* <Toolbar.Right>
-          <Toolbar.Button icon={Save}/>
-        </Toolbar.Right> */}
+        <Toolbar.Right>
+          <Toolbar.Button onClick={saveLog} icon={Save} />
+        </Toolbar.Right>
       </Toolbar>
     )
   }
