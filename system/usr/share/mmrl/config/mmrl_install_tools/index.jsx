@@ -21,7 +21,7 @@ import Terminal from "@mmrl/terminal";
 import { write } from "@mmrl/sufile"
 
 const scope = "mmrlini_v6";
-const path = `/data/adb/${modid}/system/share/mmrl/config/${scope}`
+const __useNativeFileStorage = (key, def) => useNativeFileStorage(`/data/adb/mmrl/${scope}.${key}`, def)
 
 function InstallToolsConfig() {
   const { context } = useActivity()
@@ -40,14 +40,14 @@ function InstallToolsConfig() {
     );
   };
 
-  const [curl, setCurl] = useNativeFileStorage(`${path}.curl`, "/system/usr/share/mmrl/bin/curl");
-  const [zip, setZip] = useNativeFileStorage(`${path}.zip`, "/system/usr/share/mmrl/bin/zip");
-  const [unzip, setUnzip] = useNativeFileStorage(`${path}.unzip`, "/system/bin/unzip");
-  const [clearTerminal, setClearTerminal] = useNativeFileStorage(`${path}.clear_terminal`, true);
+  const [curl, setCurl] = __useNativeFileStorage("curl", "/system/usr/share/mmrl/bin/curl");
+  const [zip, setZip] = __useNativeFileStorage("zip", "/system/usr/share/mmrl/bin/zip");
+  const [unzip, setUnzip] = __useNativeFileStorage("unzip", "/system/bin/unzip");
+  const [clearTerminal, setClearTerminal] = __useNativeFileStorage("clear_terminal", true);
 
-  const [extraArgsCurl, setExtraArgsCurl] = useNativeFileStorage(`${scope}.curl.args`, "-L");
-  const [extraArgsZip, setExtraArgsZip] = useNativeFileStorage(`${scope}.zip.args`, "-r");
-  const [extraArgsUnzip, setExtraArgsUnzip] = useNativeFileStorage(`${scope}.unzip.args`, "-qq");
+  const [extraArgsCurl, setExtraArgsCurl] = __useNativeFileStorage("curl.args", "-L");
+  const [extraArgsZip, setExtraArgsZip] = __useNativeFileStorage("zip.args", "-r");
+  const [extraArgsUnzip, setExtraArgsUnzip] = __useNativeFileStorage("unzip.args", "-qq");
 
   return (
     <Page sx={{ p: 0 }} renderToolbar={renderToolbar}>

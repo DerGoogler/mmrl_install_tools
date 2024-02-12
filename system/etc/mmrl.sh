@@ -8,8 +8,8 @@ cd $TMPDIR
 SCOPE="mmrlini_v6"
 
 function getconf {
-   if [ -f "/data/adb/${modid}/system/share/mmrl/config/$SCOPE.$1" ]; then
-      echo "$(cat "/data/adb/${modid}/system/share/mmrl/config/$SCOPE.$1" | sed 's/^"\(.*\)"$/\1/')" 
+   if [ -f "/data/adb/mmrl/$SCOPE.$1" ]; then
+      echo "$(cat "/data/adb/mmrl/$SCOPE.$1" | sed 's/^"\(.*\)"$/\1/')" 
    else
       echo "$2"
    fi
@@ -20,8 +20,8 @@ function ui_warn { echo "$YELLOW? $RESET$1"; }
 function mmrl_exec { echo "#!mmrl:$@"; }
 
 
-CURL=$(getconf "curl" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/curl")
-ZIP=$(getconf "zip" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/zip")
+CURL=$(getconf "curl" "$MMRLINI/system/usr/share/mmrl/bin/curl")
+ZIP=$(getconf "zip" "$MMRLINI/system/usr/share/mmrl/bin/zip")
 UNZIP=$(getconf "unzip" "/system/bin/unzip")
 
 EXTRA_CURL_ARGS=$(getconf "curl.args" "-L")
