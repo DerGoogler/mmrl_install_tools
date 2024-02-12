@@ -4,7 +4,8 @@ import {
   useNativeStorage,
   useNativeProperties,
   useActivity,
-  useSettings
+  useSettings,
+  useTheme
 } from "@mmrl/hooks";
 import { ExpandMore, Add, Remove, Save } from "@mui/icons-material";
 import {
@@ -24,16 +25,36 @@ import BuildConfig from "@mmrl/buildconfig";
 import Terminal from "@mmrl/terminal";
 import { write } from "@mmrl/sufiile"
 
-const scope = "mmrlini_v4";
+const scope = "mmrlini_v6";
 
-function GeneralTab(props) {
+function InstallToolsConfig() {
+  const { context } = useActivity()
+
+  const renderToolbar = () => {
+    return (
+      <Toolbar modifier="noshadow" sx={{
+        background: "rgb(188,2,194)",
+        background: "linear-gradient(22deg, rgba(188,2,194,1) 0%, rgba(74,20,140,1) 100%)"
+      }}>
+        <Toolbar.Left>
+          <Toolbar.BackButton onClick={context.popPage} />
+        </Toolbar.Left>
+        <Toolbar.Center>MMRL Install Tools</Toolbar.Center>
+      </Toolbar>
+    );
+  };
+
+  const [curl, setCurl] = useNativeProperties(`persist.${scope}.curl`, "/system/usr/share/mmrl/bin/curl");
+  const [zip, setZip] = useNativeProperties(`persist.${scope}.zip`, "/system/usr/share/mmrl/bin/zip");
+  const [unzip, setUnzip] = useNativeProperties(`persist.${scope}.unzip`, "/system/bin/unzip");
   const [clearTerminal, setClearTerminal] = useNativeProperties(`persist.${scope}.clear_terminal`, true);
-  const [extraArgsWget, setExtraArgsWget] = useNativeProperties(`persist.${scope}.wget.args`, "");
 
-  const { context } = useActivity();
+  const [extraArgsCurl, setExtraArgsCurl] = useNativeProperties(`persist.${scope}.curl.args`, "-L");
+  const [extraArgsZip, setExtraArgsZip] = useNativeProperties(`persist.${scope}.zip.args`, "-r");
+  const [extraArgsUnzip, setExtraArgsUnzip] = useNativeProperties(`persist.${scope}.unzip.args`, "-qq");
 
   return (
-    <Page sx={{ p: 0 }}>
+    <Page sx={{ p: 0 }} renderToolbar={renderToolbar}>
       <Card sx={{ m: 1 }}>
         <CardActionArea onClick={() => {
           context.pushPage({
@@ -64,26 +85,77 @@ function GeneralTab(props) {
           <ListItemText primary="Clear terminal" secondary="Clears the terminal after the download" />
           <Switch checked={clearTerminal} onChange={(e) => setClearTerminal(e.target.checked)} />
         </ListItem>
-        <ListItem>
-          <ListItemText primary="Swipeable tabs" secondary="Enables swipe between tabs" />
-          <Switch checked={props.swipeable} onChange={(e) => props.setSwipeable(e.target.checked)} />
-        </ListItem>
+        <ListItemDialogEditText
+          onSuccess={(val) => {
+            if (val) setCurl(val);
+          }}
+          inputLabel="Path"
+          type="text"
+          title="Change curl bin path"
+          initialValue={curl}
+        >
+          <ListItemText primary="Change curl bin path" secondary={curl} />
+        </ListItemDialogEditText>
+        <ListItemDialogEditText
+          onSuccess={(val) => {
+            if (val) setZip(val);
+          }}
+          inputLabel="Path"
+          type="text"
+          title="Change zip bin path"
+          initialValue={zip}
+        >
+          <ListItemText primary="Change zip bin path" secondary={zip} />
+        </ListItemDialogEditText>
+        <ListItemDialogEditText
+          onSuccess={(val) => {
+            if (val) setUnzip(val);
+          }}
+          inputLabel="Path"
+          type="text"
+          title="Change unzip bin path"
+          initialValue={unzip}
+        >
+          <ListItemText primary="Change unzip bin path" secondary={unzip} />
+        </ListItemDialogEditText>
       </List>
-
-      <Divider />
 
       <List subheader={<ListSubheader>Arguments</ListSubheader>}>
         <ListItemDialogEditText
           disabled
           onSuccess={(val) => {
-            if (val) setExtraArgsWget(val);
+            if (val) setExtraArgsCurl(val);
           }}
           inputLabel="Arguments"
           type="text"
-          title="Add extra wget arguments"
-          initialValue={extraArgsWget}
+          title="Add extra curl arguments"
+          initialValue={extraArgsCurl}
         >
-          <ListItemText primary="Add extra wget arguments" secondary={extraArgsWget} />
+          <ListItemText primary="Add extra curl arguments" secondary={extraArgsCurl} />
+        </ListItemDialogEditText>
+        <ListItemDialogEditText
+          disabled
+          onSuccess={(val) => {
+            if (val) setExtraArgsZip(val);
+          }}
+          inputLabel="Arguments"
+          type="text"
+          title="Add extra zip arguments"
+          initialValue={extraArgsZip}
+        >
+          <ListItemText primary="Add extra zip arguments" secondary={extraArgsZip} />
+        </ListItemDialogEditText>
+        <ListItemDialogEditText
+          disabled
+          onSuccess={(val) => {
+            if (val) setExtraArgsUnzip(val);
+          }}
+          inputLabel="Arguments"
+          type="text"
+          title="Add extra unzip arguments"
+          initialValue={extraArgsUnzip}
+        >
+          <ListItemText primary="Add extra unzip arguments" secondary={extraArgsUnzip} />
         </ListItemDialogEditText>
       </List>
 
@@ -98,124 +170,10 @@ function GeneralTab(props) {
   );
 }
 
-function FaqTab() {
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
-
-  return (
-    <Page sx={{ p: 1 }}>
-      <Accordion disableGutters expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary
-          expandIcon={<ExpandMore />}
-        >
-          <Typography>
-            Why does I need a module for installing others?
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            A modules offers <strong>fast and easy uodates</strong>, users also
-            can make changes or made a module for their self.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion disableGutters expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-        <AccordionSummary
-          expandIcon={<ExpandMore />}
-        >
-          <Typography>Can I install GitHub Archives with MMRL?</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Currently it isn's supported to install{" "}
-            <strong>GitHub Archives</strong> with <strong>MMRL</strong>. It is
-            planned that you can install <strong>GitHub Archives</strong> with{" "}
-            <strong>MMRL</strong>.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion disableGutters expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-        <AccordionSummary
-          expandIcon={<ExpandMore />}
-        >
-          <Typography>Why are the extra arguments disabled?</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            There is currently no valid way to pass them down to the command.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion disableGutters expanded={expanded === 'panel_latest'} onChange={handleChange('panel_latest')}>
-        <AccordionSummary
-          expandIcon={<ExpandMore />}
-        >
-          <Typography>Comes more FAQs in the future?</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            We always add new FAQs, but this question is always the latest.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-    </Page>
-  );
-}
-
-function InstallToolsConfig() {
-  const { context } = useActivity()
-  const [index, setIndex] = React.useState(0)
-  const [swipeable, setSwipeable] = useNativeStorage("mmrlini_swipeable", false)
-
-  const handlePreChange = (event) => {
-    if (event.index != this.state.index) {
-      setIndex(event.index)
-    }
-  };
-
-  const renderToolbar = () => {
-    return (
-      <Toolbar modifier="noshadow">
-        <Toolbar.Left>
-          <Toolbar.BackButton onClick={context.popPage} />
-        </Toolbar.Left>
-        <Toolbar.Center>MMRL Install Tools</Toolbar.Center>
-      </Toolbar>
-    );
-  };
-
-  const renderTabs = () => {
-    return [
-      {
-        content: <GeneralTab swipeable={swipeable} setSwipeable={setSwipeable} />,
-        tab: <Tabbar.Tab label='General' />
-      },
-      {
-        content: <FaqTab />,
-        tab: <Tabbar.Tab label='FAQ' />
-      }
-    ];
-  }
-
-  return (
-    <Page renderToolbar={renderToolbar}>
-      <Tabbar
-        swipeable={swipeable}
-        position='auto'
-        index={index}
-        onPreChange={handlePreChange}
-        renderTabs={renderTabs}
-      />
-    </Page>
-  );
-}
-
 function TerminalActivity() {
   const [fontSize, setFontSize] = useNativeStorage("mmrlini_log_terminal", 100);
   const { context } = useActivity();
+  const { theme } = useTheme();
   const [lines, setLines] = React.useState([]);
 
   const addLine = (line) => {
@@ -266,10 +224,9 @@ function TerminalActivity() {
       onShow={startLog}
       renderToolbar={renderToolbar}
       modifier="noshadow"
-      backgroundStyle="#000000"
       renderBottomToolbar={() => {
         return (
-          <BottomToolbar sx={{ background: "none", backgroundColor: "#000000" }}>
+          <BottomToolbar sx={{ background: "none", backgroundColor: theme.palette.background.default }}>
             <Stack spacing={2} direction="row" sx={{ height: "100%", ml: 1, mr: 1 }} alignItems="center">
               <Add color="secondary" />
               <Slider

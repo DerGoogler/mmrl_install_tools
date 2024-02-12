@@ -1,6 +1,6 @@
 #!/system/bin/sh
 set -e
-source $MODULES/mmrl_install_tools/system/etc/mmrl.sh
+source $MMRLINI/system/etc/mmrl.sh
 
 FILENAME="$TMPDIR/$NAME"
 

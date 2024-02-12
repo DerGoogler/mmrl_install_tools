@@ -4,17 +4,23 @@
 TMPDIR="/data/local/tmp"
 cd $TMPDIR
 
-function getconf {
-  /system/bin/getprop "$1" "$2" | sed 's/^"\(.*\)"$/\1/'
-}
-
-function mmrl {
-    echo "#!mmrl:$@"
-}
+function getconf { /system/bin/getprop "$1" "$2" | sed 's/^"\(.*\)"$/\1/'; }
+function ui_info { echo "$GREEN- $RESET$1"; }
+function ui_error { echo "$RED! $RESET$2"; exit $1; }
+function ui_warn { echo "$YELLOW? $RESET$1"; }
+function mmrl_exec { echo "#!mmrl:$@"; }
 
 SCOPE="mmrlini_v5"
+
+CURL=$(getconf "persist.$SCOPE.curl" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/curl")
+ZIP=$(getconf "persist.$SCOPE.zip" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/zip")
+UNZIP=$(getconf "persist.$SCOPE.unzip" "/system/bin/unzip")
+
+EXTRA_CURL_ARGS=$(getconf "persist.$SCOPE.curl.args" " -L")
+EXTRA_ZIP_ARGS=$(getconf "persist.$SCOPE.zip.args" " -r")
+EXTRA_UNZIP_ARGS=$(getconf "persist.$SCOPE.unzip.args" " -qq")
+
 CLEAR_TERMINAL_AFTER_DL=$(getconf "persist.$SCOPE.clear_terminal" "true")
-EXTRA_WGET_ARGS=$(getconf "persist.$SCOPE.wget.args" " ")
 
 GREEN="\x1b[32m"
 RED="\x1b[31m"
@@ -43,12 +49,10 @@ install_cli() {
          exec $ASUCLI module install "$1"
          ;;
       "Unknown")
-         echo "! Unable to find root manager"
-         exit 1
+         ui_error 1 "Unable to find root manager"
          ;;
       *)
-         echo "! Install error"
-         exit 1
+         ui_error 1 "Install error"
          ;;
    esac
 }
@@ -65,26 +69,23 @@ bb() {
          exec $ASUBSU $@
          ;;
       "Unknown")
-         echo "! Unable to find busybox"
-         exit 1
+         ui_error 1 "Unable to find BusyBox"
          ;;
       *)
-         echo "! busybox error"
-         exit 1
+         ui_error 1 "BusyBox error"
          ;;
    esac
 }
 
 download_file() {
-    bb wget $EXTRA_WGET_ARGS $URL -O "$1"
+    $CURL $EXTRA_CURL_ARGS $URL -o "$1"
 
     if [ $(echo $?) -eq 0 ]; then
-        echo "$GREEN- Successful downloaded $NAME$RESET"
+        ui_info "Successful downloaded $GREEN$NAME$RESET"
         if [ "$CLEAR_TERMINAL_AFTER_DL" = "true" ]; then
-          mmrl clearTerminal
+          mmrl_exec clearTerminal
         fi
     else
-        echo "$RED! Something went wrong$RESET"
-        exit 1
+        ui_error 1 "Something went wrong"
     fi
 }
