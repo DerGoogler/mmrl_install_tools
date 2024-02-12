@@ -1,18 +1,13 @@
 import React from "react";
-import { Page, Tabbar, Toolbar, BottomToolbar, Ansi } from "@mmrl/ui";
+import { Page, Toolbar, BottomToolbar, Ansi } from "@mmrl/ui";
 import {
-  useNativeStorage,
-  useNativeProperties,
   useActivity,
-  useSettings,
+  useNativeFileStorage,
   useTheme
 } from "@mmrl/hooks";
-import { ExpandMore, Add, Remove, Save } from "@mui/icons-material";
+import { Add, Remove, Save } from "@mui/icons-material";
 import {
   Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Stack,
   Box,
   Slider,
@@ -23,9 +18,10 @@ import {
 } from "@mui/material";
 import BuildConfig from "@mmrl/buildconfig";
 import Terminal from "@mmrl/terminal";
-import { write } from "@mmrl/sufiile"
+import { write } from "@mmrl/sufile"
 
 const scope = "mmrlini_v6";
+const path = `/data/adb/${modid}/system/share/mmrl/config/${scope}`
 
 function InstallToolsConfig() {
   const { context } = useActivity()
@@ -44,14 +40,14 @@ function InstallToolsConfig() {
     );
   };
 
-  const [curl, setCurl] = useNativeProperties(`persist.${scope}.curl`, "/system/usr/share/mmrl/bin/curl");
-  const [zip, setZip] = useNativeProperties(`persist.${scope}.zip`, "/system/usr/share/mmrl/bin/zip");
-  const [unzip, setUnzip] = useNativeProperties(`persist.${scope}.unzip`, "/system/bin/unzip");
-  const [clearTerminal, setClearTerminal] = useNativeProperties(`persist.${scope}.clear_terminal`, true);
+  const [curl, setCurl] = useNativeFileStorage(`${path}.curl`, "/system/usr/share/mmrl/bin/curl");
+  const [zip, setZip] = useNativeFileStorage(`${path}.zip`, "/system/usr/share/mmrl/bin/zip");
+  const [unzip, setUnzip] = useNativeFileStorage(`${path}.unzip`, "/system/bin/unzip");
+  const [clearTerminal, setClearTerminal] = useNativeFileStorage(`${path}.clear_terminal`, true);
 
-  const [extraArgsCurl, setExtraArgsCurl] = useNativeProperties(`persist.${scope}.curl.args`, "-L");
-  const [extraArgsZip, setExtraArgsZip] = useNativeProperties(`persist.${scope}.zip.args`, "-r");
-  const [extraArgsUnzip, setExtraArgsUnzip] = useNativeProperties(`persist.${scope}.unzip.args`, "-qq");
+  const [extraArgsCurl, setExtraArgsCurl] = useNativeFileStorage(`${scope}.curl.args`, "-L");
+  const [extraArgsZip, setExtraArgsZip] = useNativeFileStorage(`${scope}.zip.args`, "-r");
+  const [extraArgsUnzip, setExtraArgsUnzip] = useNativeFileStorage(`${scope}.unzip.args`, "-qq");
 
   return (
     <Page sx={{ p: 0 }} renderToolbar={renderToolbar}>
@@ -122,7 +118,6 @@ function InstallToolsConfig() {
 
       <List subheader={<ListSubheader>Arguments</ListSubheader>}>
         <ListItemDialogEditText
-          disabled
           onSuccess={(val) => {
             if (val) setExtraArgsCurl(val);
           }}
@@ -134,7 +129,6 @@ function InstallToolsConfig() {
           <ListItemText primary="Add extra curl arguments" secondary={extraArgsCurl} />
         </ListItemDialogEditText>
         <ListItemDialogEditText
-          disabled
           onSuccess={(val) => {
             if (val) setExtraArgsZip(val);
           }}
@@ -146,7 +140,6 @@ function InstallToolsConfig() {
           <ListItemText primary="Add extra zip arguments" secondary={extraArgsZip} />
         </ListItemDialogEditText>
         <ListItemDialogEditText
-          disabled
           onSuccess={(val) => {
             if (val) setExtraArgsUnzip(val);
           }}
@@ -186,7 +179,10 @@ function TerminalActivity() {
 
   const renderToolbar = () => {
     return (
-      <Toolbar>
+      <Toolbar modifier="noshadow" sx={{
+        background: "rgb(188,2,194)",
+        background: "linear-gradient(22deg, rgba(188,2,194,1) 0%, rgba(74,20,140,1) 100%)"
+      }}>
         <Toolbar.Left>
           <Toolbar.BackButton onClick={context.popPage} />
         </Toolbar.Left>

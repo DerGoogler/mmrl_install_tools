@@ -4,23 +4,31 @@
 TMPDIR="/data/local/tmp"
 cd $TMPDIR
 
-function getconf { /system/bin/getprop "$1" "$2" | sed 's/^"\(.*\)"$/\1/'; }
+
+SCOPE="mmrlini_v6"
+
+function getconf {
+   if [ -f "/data/adb/${modid}/system/share/mmrl/config/$SCOPE.$1" ]; then
+      echo "$(cat "/data/adb/${modid}/system/share/mmrl/config/$SCOPE.$1" | sed 's/^"\(.*\)"$/\1/')" 
+   else
+      echo "$2"
+   fi
+}
 function ui_info { echo "$GREEN- $RESET$1"; }
 function ui_error { echo "$RED! $RESET$2"; exit $1; }
 function ui_warn { echo "$YELLOW? $RESET$1"; }
 function mmrl_exec { echo "#!mmrl:$@"; }
 
-SCOPE="mmrlini_v5"
 
-CURL=$(getconf "persist.$SCOPE.curl" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/curl")
-ZIP=$(getconf "persist.$SCOPE.zip" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/zip")
-UNZIP=$(getconf "persist.$SCOPE.unzip" "/system/bin/unzip")
+CURL=$(getconf "curl" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/curl")
+ZIP=$(getconf "zip" "$MODULES/mmrl_install_tools/system/usr/share/mmrl/bin/zip")
+UNZIP=$(getconf "unzip" "/system/bin/unzip")
 
-EXTRA_CURL_ARGS=$(getconf "persist.$SCOPE.curl.args" " -L")
-EXTRA_ZIP_ARGS=$(getconf "persist.$SCOPE.zip.args" " -r")
-EXTRA_UNZIP_ARGS=$(getconf "persist.$SCOPE.unzip.args" " -qq")
+EXTRA_CURL_ARGS=$(getconf "curl.args" "-L")
+EXTRA_ZIP_ARGS=$(getconf "zip.args" "-r")
+EXTRA_UNZIP_ARGS=$(getconf "unzip.args" "-qq")
 
-CLEAR_TERMINAL_AFTER_DL=$(getconf "persist.$SCOPE.clear_terminal" "true")
+CLEAR_TERMINAL_AFTER_DL=$(getconf "clear_terminal" "true")
 
 GREEN="\x1b[32m"
 RED="\x1b[31m"
