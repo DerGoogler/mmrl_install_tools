@@ -1,7 +1,7 @@
 id=mmrl_install_tools
 name=MMRL Install Tools
-version=6.3.7
-versionCode=637
+version=6.3.8
+versionCode=638
 author=Der_Googler
 description=Required module if you want to install modules from Explore
 minApi=26
