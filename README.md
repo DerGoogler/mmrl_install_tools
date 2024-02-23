@@ -5,7 +5,7 @@
 
 # MMRL Install Tools
 
-> MMRL does not support MMRL Install Tools below V5!
+> MMRL does not support MMRL Install Tools below V6 by default!
 
 Required module if you want to install modules from Explore
 
