@@ -1,9 +1,9 @@
 #!/system/bin/sh
 set -e
-source $MODULES/mmrl_install_tools/system/etc/mmrl.sh
+source $MMRLINI/system/etc/mmrl.sh
 
 if [ "$CLEAR_TERMINAL_AFTER_DL" = "true" ]; then
-   mmrl clearTerminal
+   mmrl_exec clearTerminal
 fi
 
 install_cli "$ZIPFILE"

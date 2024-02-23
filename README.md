@@ -5,6 +5,8 @@
 
 # MMRL Install Tools
 
+> MMRL does not support MMRL Install Tools below V5!
+
 Required module if you want to install modules from Explore
 
 <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Googlers-Repo/mmrl_install_tools/total">
