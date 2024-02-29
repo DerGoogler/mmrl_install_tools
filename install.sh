@@ -22,6 +22,7 @@ on_install() {
 
     ui_print "- Installing for $ARCH"
     
+    move_stdout "jq-$ARCH" "$MODPATH/system/usr/share/mmrl/bin/zip"
     move_stdout "zip-$ARCH" "$MODPATH/system/usr/share/mmrl/bin/zip"
     move_stdout "curl-$ARCH" "$MODPATH/system/usr/share/mmrl/bin/curl"
 
@@ -33,8 +34,9 @@ set_permissions() {
     set_perm_recursive $MODPATH 0 0 0755 0644
 
     set_perm $MODPATH/system/etc/mmrl.sh 0 0 0644
-    set_perm $MODPATH/system/usr/share/mmrl/bin/curl 0 0 0755
+    set_perm $MODPATH/system/usr/share/mmrl/bin/jq 0 0 0755
     set_perm $MODPATH/system/usr/share/mmrl/bin/zip 0 0 0755
+    set_perm $MODPATH/system/usr/share/mmrl/bin/curl 0 0 0755
     set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_explore_install_v6 0 0 0755
     set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_local_install_v6 0 0 0755
 }

@@ -5,14 +5,10 @@ TMPDIR="/data/local/tmp"
 cd $TMPDIR
 
 
-SCOPE="mmrlini_v6"
+VERSION="v1"
 
 function getconf {
-   if [ -f "/data/adb/mmrl/$SCOPE.$1" ]; then
-      echo "$(cat "/data/adb/mmrl/$SCOPE.$1" | sed 's/^"\(.*\)"$/\1/')" 
-   else
-      echo "$2"
-   fi
+   echo $($MMRLINI/system/usr/share/mmrl/bin/jq -r ".$1 // \"$2\"" $ADB/mmrl/mmrlini.$VERSION.json)
 }
 function ui_info { echo "$GREEN- $RESET$1"; }
 function ui_error { echo "$RED! $RESET$2"; exit $1; }
@@ -57,10 +53,10 @@ install_cli() {
          exec $ASUCLI module install "$1"
          ;;
       "Unknown")
-         ui_error 1 "Unable to find root manager"
+         ui_error 500 "Unable to find root manager"
          ;;
       *)
-         ui_error 1 "Install error"
+         ui_error 500 "Install error"
          ;;
    esac
 }
@@ -77,10 +73,10 @@ bb() {
          exec $ASUBSU $@
          ;;
       "Unknown")
-         ui_error 1 "Unable to find BusyBox"
+         ui_error 500 "Unable to find BusyBox"
          ;;
       *)
-         ui_error 1 "BusyBox error"
+         ui_error 500 "BusyBox error"
          ;;
    esac
 }
@@ -94,6 +90,6 @@ download_file() {
           mmrl_exec clearTerminal
         fi
     else
-        ui_error 1 "Something went wrong"
+        ui_error 500 "Something went wrong"
     fi
 }

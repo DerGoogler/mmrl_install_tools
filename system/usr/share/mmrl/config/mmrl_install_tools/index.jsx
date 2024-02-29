@@ -1,77 +1,45 @@
 import React from "react";
-import { Page, Toolbar, BottomToolbar, Ansi } from "@mmrl/ui";
-import {
-  useActivity,
-  useNativeFileStorage,
-  useNativeStorage,
-  useTheme
-} from "@mmrl/hooks";
-import { Add, Remove, Save } from "@mui/icons-material";
-import {
-  Typography,
-  Stack,
-  Box,
-  Slider,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActionArea
-} from "@mui/material";
-import BuildConfig from "@mmrl/buildconfig";
-import Terminal from "@mmrl/terminal";
-import { write } from "@mmrl/sufile"
+import { Page, ListItemDialogEditText } from "@mmrl/ui";
+import { ConfigProvider } from "@mmrl/providers";
+import { useConfig, useActivity } from "@mmrl/hooks";
+import { Typography, Divider, Card, CardContent, CardActionArea, Switch, List, ListItemButton, ListSubheader, ListItem, ListItemText } from "@mui/material";
 
-const scope = "mmrlini_v6";
-const __useNativeFileStorage = (key, def) => useNativeFileStorage(`/data/adb/mmrl/${scope}.${key}`, def)
+const TerminalActivity = include("activitys/TerminalActivity.jsx");
+const RenderToolbar = include("components/RenderToolbar.jsx");
+const CenterBox = include("components/CenterBox.jsx");
 
-function InstallToolsConfig() {
-  const { context } = useActivity()
+function App() {
+  const { context } = useActivity();
+  const [config, setConfig] = useConfig();
 
-  const renderToolbar = () => {
+  if (BuildConfig.VERSION_CODE < 21410) {
     return (
-      <Toolbar modifier="noshadow" sx={{
-        background: "rgb(188,2,194)",
-        background: "linear-gradient(22deg, rgba(188,2,194,1) 0%, rgba(74,20,140,1) 100%)"
-      }}>
-        <Toolbar.Left>
-          <Toolbar.BackButton onClick={context.popPage} />
-        </Toolbar.Left>
-        <Toolbar.Center>MMRL Install Tools</Toolbar.Center>
-      </Toolbar>
+      <Page renderToolbar={RenderToolbar("Version mismatch")}>
+        <CenterBox>
+          MMRL Install Tools requires MMRL above <strong>2.14.10</strong>!
+        </CenterBox>
+      </Page>
     );
-  };
-
-  const [curl, setCurl] = __useNativeFileStorage("curl", "/system/usr/share/mmrl/bin/curl");
-  const [zip, setZip] = __useNativeFileStorage("zip", "/system/usr/share/mmrl/bin/zip");
-  const [unzip, setUnzip] = __useNativeFileStorage("unzip", "/system/bin/unzip");
-  const [clearTerminal, setClearTerminal] = __useNativeFileStorage("clear_terminal", true);
-
-  const [extraArgsCurl, setExtraArgsCurl] = __useNativeFileStorage("curl.args", "-L");
-  const [extraArgsZip, setExtraArgsZip] = __useNativeFileStorage("zip.args", "-r");
-  const [extraArgsUnzip, setExtraArgsUnzip] = __useNativeFileStorage("unzip.args", "-qq");
+  }
 
   return (
-    <Page sx={{ p: 0 }} renderToolbar={renderToolbar}>
+    <Page sx={{ p: 0 }} renderToolbar={RenderToolbar("MMRL Install Tools")}>
       <Card sx={{ m: 1 }}>
-        <CardActionArea onClick={() => {
-          context.pushPage({
-            component: TerminalActivity,
-            key: "Terminal",
-            extra: {}
-          })
-        }}>
-          <CardMedia
-            component="img"
-            height="140"
-            image="https://miro.medium.com/v2/resize:fit:2000/1*ewzA98ft7vVUt6cBgY8gjw.png"
-            alt="logs"
-          />
+        <CardActionArea
+          onClick={() => {
+            context.pushPage({
+              component: TerminalActivity,
+              key: "Terminal",
+              extra: {},
+            });
+          }}
+        >
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              Log inside MMRLINI
+              Logcat
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              You can now view logs inside MMRLINI to make the bug hunt more easier. Click to try it out!
+              You can now view logs inside MMRL Install Tools to make the bug hunt more easier. Click to try it out!
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -80,76 +48,76 @@ function InstallToolsConfig() {
       <List subheader={<ListSubheader>Settings</ListSubheader>}>
         <ListItem>
           <ListItemText primary="Clear terminal" secondary="Clears the terminal after the download" />
-          <Switch checked={clearTerminal} onChange={(e) => setClearTerminal(e.target.checked)} />
+          <Switch checked={config.clear_terminal} onChange={(e) => setConfig("clear_terminal", e.target.checked)} />
         </ListItem>
         <ListItemDialogEditText
           onSuccess={(val) => {
-            if (val) setCurl(val);
+            if (val) setConfig("curl", val);
           }}
           inputLabel="Path"
           type="text"
           title="Change curl bin path"
-          initialValue={curl}
+          initialValue={config.curl}
         >
-          <ListItemText primary="Change curl bin path" secondary={curl} />
+          <ListItemText primary="Change curl bin path" secondary={config.curl} />
         </ListItemDialogEditText>
         <ListItemDialogEditText
           onSuccess={(val) => {
-            if (val) setZip(val);
+            if (val) setConfig("zip", val);
           }}
           inputLabel="Path"
           type="text"
           title="Change zip bin path"
-          initialValue={zip}
+          initialValue={config.zip}
         >
-          <ListItemText primary="Change zip bin path" secondary={zip} />
+          <ListItemText primary="Change zip bin path" secondary={config.zip} />
         </ListItemDialogEditText>
         <ListItemDialogEditText
           onSuccess={(val) => {
-            if (val) setUnzip(val);
+            if (val) setConfig("unzip", val);
           }}
           inputLabel="Path"
           type="text"
           title="Change unzip bin path"
-          initialValue={unzip}
+          initialValue={config.unzip}
         >
-          <ListItemText primary="Change unzip bin path" secondary={unzip} />
+          <ListItemText primary="Change unzip bin path" secondary={config.unzip} />
         </ListItemDialogEditText>
       </List>
 
       <List subheader={<ListSubheader>Arguments</ListSubheader>}>
         <ListItemDialogEditText
           onSuccess={(val) => {
-            if (val) setExtraArgsCurl(val);
+            if (val) setConfig("curl__args", val);
           }}
           inputLabel="Arguments"
           type="text"
           title="Add extra curl arguments"
-          initialValue={extraArgsCurl}
+          initialValue={config.curl__args}
         >
-          <ListItemText primary="Add extra curl arguments" secondary={extraArgsCurl} />
+          <ListItemText primary="Add extra curl arguments" secondary={config.curl__args} />
         </ListItemDialogEditText>
         <ListItemDialogEditText
           onSuccess={(val) => {
-            if (val) setExtraArgsZip(val);
+            if (val) setConfig("zip__args", val);
           }}
           inputLabel="Arguments"
           type="text"
           title="Add extra zip arguments"
-          initialValue={extraArgsZip}
+          initialValue={config.zip__args}
         >
-          <ListItemText primary="Add extra zip arguments" secondary={extraArgsZip} />
+          <ListItemText primary="Add extra zip arguments" secondary={config.zip__args} />
         </ListItemDialogEditText>
         <ListItemDialogEditText
           onSuccess={(val) => {
-            if (val) setExtraArgsUnzip(val);
+            if (val) setConfig("unzip__args", val);
           }}
           inputLabel="Arguments"
           type="text"
           title="Add extra unzip arguments"
-          initialValue={extraArgsUnzip}
+          initialValue={config.unzip__args}
         >
-          <ListItemText primary="Add extra unzip arguments" secondary={extraArgsUnzip} />
+          <ListItemText primary="Add extra unzip arguments" secondary={config.unzip__args} />
         </ListItemDialogEditText>
       </List>
 
@@ -164,111 +132,23 @@ function InstallToolsConfig() {
   );
 }
 
-function TerminalActivity() {
-  const [fontSize, setFontSize] = useNativeStorage("mmrlini_log_terminal", 100);
-  const { context } = useActivity();
-  const { theme } = useTheme();
-  const [lines, setLines] = React.useState([]);
-
-  const addLine = (line) => {
-    setLines((lines) => [...lines, line]);
-  };
-
-  const saveLog = () => {
-    write("/data/adb/mmrl.log", lines.join("\n"))
-  }
-
-  const renderToolbar = () => {
-    return (
-      <Toolbar modifier="noshadow" sx={{
-        background: "rgb(188,2,194)",
-        background: "linear-gradient(22deg, rgba(188,2,194,1) 0%, rgba(74,20,140,1) 100%)"
-      }}>
-        <Toolbar.Left>
-          <Toolbar.BackButton onClick={context.popPage} />
-        </Toolbar.Left>
-        <Toolbar.Center>
-          Logs
-        </Toolbar.Center>
-        <Toolbar.Right>
-          <Toolbar.Button onClick={saveLog} icon={Save} />
-        </Toolbar.Right>
-      </Toolbar>
-    )
-  }
-
-  const handleChange = (event, newValue) => {
-    setFontSize(Number(newValue));
-  };
-
-  const startLog = React.useMemo(() => {
-    const envp = {
-      PACKAGENAME: BuildConfig.APPLICATION_ID,
-    };
-
-    Terminal.exec({
-      command: "logcat --pid=`pidof -s $PACKAGENAME` -v color",
-      env: envp,
-      onLine: (line) => {
-        addLine(line);
-      },
-      onExit: (code) => { },
-    });
-  }, []);
-
+const version = "v1";
+export default () => {
   return (
-    <Page
-      onShow={startLog}
-      renderToolbar={renderToolbar}
-      modifier="noshadow"
-      renderBottomToolbar={() => {
-        return (
-          <BottomToolbar sx={{ background: "none", backgroundColor: theme.palette.background.default }}>
-            <Stack spacing={2} direction="row" sx={{ height: "100%", ml: 1, mr: 1 }} alignItems="center">
-              <Add color="secondary" />
-              <Slider
-                value={fontSize}
-                onChange={handleChange}
-                step={10}
-                marks
-                min={20}
-                max={200} />
-              <Remove color="secondary" />
-            </Stack>
-          </BottomToolbar>
-        )
+    <ConfigProvider
+      initialConfig={{
+        curl: "/system/usr/share/mmrl/bin/curl",
+        zip: "/system/usr/share/mmrl/bin/zip",
+        unzip: "/system/bin/unzip",
+        clear_terminal: true,
+        curl__args: "-L",
+        zip__args: "-r",
+        unzip__args: "-qq",
       }}
+      loadFromFile={`/data/adb/mmrl/mmrlini.${version}.json`}
+      loader="json"
     >
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-        }}
-      >
-        <Stack
-          style={{
-            whiteSpace: "pre",
-            flex: "0 0 100%",
-            backgroundColor: "black",
-            color: "white",
-            height: "100%",
-          }}
-          direction="column"
-          justifyContent="flex-start"
-          alignItems="stretch"
-          spacing={0}
-        >
-          {lines.map((line) => (
-            <Box component={Ansi} sx={{
-              fontSize: fontSize ? `${fontSize}%` : "none",
-              ml: 1,
-              mr: 1,
-            }}>{line}</Box>
-          ))}
-        </Stack>
-      </div>
-    </Page>
+      <App />
+    </ConfigProvider>
   );
-}
-
-export default InstallToolsConfig;
+};
