@@ -20,9 +20,9 @@ CURL=$(getconf "curl" "$MMRLINI/system/usr/share/mmrl/bin/curl")
 ZIP=$(getconf "zip" "$MMRLINI/system/usr/share/mmrl/bin/zip")
 UNZIP=$(getconf "unzip" "/system/bin/unzip")
 
-EXTRA_CURL_ARGS=$(getconf "curl.args" "-L")
-EXTRA_ZIP_ARGS=$(getconf "zip.args" "-r")
-EXTRA_UNZIP_ARGS=$(getconf "unzip.args" "-qq")
+EXTRA_CURL_ARGS=$(getconf "curl__args" "-L")
+EXTRA_ZIP_ARGS=$(getconf "zip__args" "-r")
+EXTRA_UNZIP_ARGS=$(getconf "unzip__args" "-qq")
 
 CLEAR_TERMINAL_AFTER_DL=$(getconf "clear_terminal" "true")
 
