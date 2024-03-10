@@ -22,7 +22,7 @@ on_install() {
 
     ui_print "- Installing for $ARCH"
     
-    move_stdout "jq-$ARCH" "$MODPATH/system/usr/share/mmrl/bin/zip"
+    move_stdout "jq-$ARCH" "$MODPATH/system/usr/share/mmrl/bin/jq"
     move_stdout "zip-$ARCH" "$MODPATH/system/usr/share/mmrl/bin/zip"
     move_stdout "curl-$ARCH" "$MODPATH/system/usr/share/mmrl/bin/curl"
 
