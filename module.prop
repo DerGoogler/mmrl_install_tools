@@ -1,6 +1,6 @@
 id=mmrl_install_tools
 name=MMRL Install Tools
-version=6.4.8
-versionCode=648
+version=6.4.9
+versionCode=649
 author=Der_Googler
 description=Required module if you want to install modules from Explore
