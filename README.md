@@ -20,7 +20,7 @@ Required module if you want to install modules from Explore
 
 ## Installation
 
-Pick the latest [release](https://github.com/Googlers-Repo/mmrl_install_tools/releases/) and install it via your root manager (e.g. [Magisk][Magisk], [KernelSU][KernelSU] or [APatch][APatch]). After a reboot you can install modules via [MMRL][MMRL].
+Pick the latest [release](https://github.com/DerGoogler/mmrl_install_tools/releases/) and install it via your root manager (e.g. [Magisk][Magisk], [KernelSU][KernelSU] or [APatch][APatch]). After a reboot you can install modules via [MMRL][MMRL].
 
 > You also able to configure the module within [MMRL][MMRL]
 
@@ -29,19 +29,19 @@ Pick the latest [release](https://github.com/Googlers-Repo/mmrl_install_tools/re
 [Magisk][Magisk]
 
 ```shell
-curl -L "https://github.com/Googlers-Repo/mmrl_install_tools/releases/latest/download/module.zip" --output "/data/local/tmp/mmrl_install_tools.zip" && /system/bin/magisk --install-module "/data/local/tmp/mmrl_install_tools.zip"
+curl -L "https://github.com/DerGoogler/mmrl_install_tools/releases/latest/download/module.zip" --output "/data/local/tmp/mmrl_install_tools.zip" && /system/bin/magisk --install-module "/data/local/tmp/mmrl_install_tools.zip"
 ```
 
 [KernelSU][KernelSU]
 
 ```shell
-curl -L "https://github.com/Googlers-Repo/mmrl_install_tools/releases/latest/download/module.zip" --output "/data/local/tmp/mmrl_install_tools.zip" && /data/adb/ksu/bin/ksud module install "/data/local/tmp/mmrl_install_tools.zip"
+curl -L "https://github.com/DerGoogler/mmrl_install_tools/releases/latest/download/module.zip" --output "/data/local/tmp/mmrl_install_tools.zip" && /data/adb/ksu/bin/ksud module install "/data/local/tmp/mmrl_install_tools.zip"
 ```
 
 [APatch][APatch]
 
 ```shell
-curl -L "https://github.com/Googlers-Repo/mmrl_install_tools/releases/latest/download/module.zip" --output "/data/local/tmp/mmrl_install_tools.zip" && /data/adb/ap/bin/apd module install "/data/local/tmp/mmrl_install_tools.zip"
+curl -L "https://github.com/DerGoogler/mmrl_install_tools/releases/latest/download/module.zip" --output "/data/local/tmp/mmrl_install_tools.zip" && /data/adb/ap/bin/apd module install "/data/local/tmp/mmrl_install_tools.zip"
 ```
 
 ## API
