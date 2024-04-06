@@ -9,7 +9,7 @@
 
 Required module if you want to install modules from Explore
 
-<img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Googlers-Repo/mmrl_install_tools/total">
+<img alt="GitHub all releases" src="https://img.shields.io/github/downloads/DerGoogler/mmrl_install_tools/total">
 
 <a href="https://mmrl.dergoogler.com/?module=mmrl_install_tools"><img height="45px" alt="Get it on MMRL" src="https://raw.githubusercontent.com/DerGoogler/MMRL/master/www/assets/MMRL-Badge.svg"></a>
 
