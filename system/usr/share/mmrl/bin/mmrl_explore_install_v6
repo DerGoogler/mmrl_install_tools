@@ -1,6 +1,6 @@
 #!/system/bin/sh
 set -e
-. "$MMRLINI/system/etc/mmrl_v7.sh"
+. "$MMRLINI/system/etc/mmrl.sh"
 
 FILENAME="$TMPDIR/$NAME"
 

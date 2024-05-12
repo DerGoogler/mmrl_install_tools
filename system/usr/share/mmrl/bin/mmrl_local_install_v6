@@ -1,6 +1,6 @@
 #!/system/bin/sh
 set -e
-. "$MMRLINI/system/etc/mmrl_v7.sh"
+. "$MMRLINI/system/etc/mmrl.sh"
 
 if [ "$CLEAR_TERMINAL_AFTER_DL" = "true" ]; then
    mmrl_exec clearTerminal

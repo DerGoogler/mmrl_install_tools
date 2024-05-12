@@ -1,27 +1,31 @@
-
 # Systemless Mkshrc could affect this
 TMPDIR="/data/local/tmp"
 cd $TMPDIR
 
-
 VERSION="v7"
 
-function getconf {
-   echo $($MMRLINI/system/usr/share/mmrl/bin/jq -r ".$1 // \"$2\"" "$ADB/mmrl/mmrlini.$VERSION.json")
+getconf() {
+    local file="$ADB/mmrl/mmrlini.$VERSION.ini"
+    local default_value="$2"
+    local value
+    if [ -f "$file" ]; then
+        value=$(sed -n "s|^$1 = ||p" "$file" 2>/dev/null)
+        if [ -z "$value" ]; then
+            echo "$default_value"
+        else
+            echo "$value"
+        fi
+    else
+        echo "$default_value"
+    fi
 }
-function ui_info { echo "$GREEN- $RESET$1"; }
-function ui_error { echo "$RED! $RESET$2"; exit $1; }
-function ui_warn { echo "$YELLOW? $RESET$1"; }
-function mmrl_exec { echo "#!mmrl:$*"; }
-
+ui_info() { echo "$GREEN- $RESET$1"; }
+ui_error() { echo "$RED! $RESET$2"; exit $1; }
+ui_warn() { echo "$YELLOW? $RESET$1"; }
+mmrl_exec() { echo "#!mmrl:$*"; }
 
 CURL=$(getconf "curl" "$MMRLINI/system/usr/share/mmrl/bin/curl")
-# ZIP=$(getconf "zip" "$MMRLINI/system/usr/share/mmrl/bin/zip")
-# UNZIP=$(getconf "unzip" "/system/bin/unzip")
-
 EXTRA_CURL_ARGS=$(getconf "curl__args" "-L")
-# EXTRA_ZIP_ARGS=$(getconf "zip__args" "-r")
-# EXTRA_UNZIP_ARGS=$(getconf "unzip__args" "-qq")
 
 CLEAR_TERMINAL_AFTER_DL=$(getconf "clear_terminal" "true")
 

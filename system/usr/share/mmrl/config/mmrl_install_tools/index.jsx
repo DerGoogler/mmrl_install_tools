@@ -1,7 +1,7 @@
 import React from "react";
-import { Page, ListItemDialogEditText } from "@mmrl/ui";
+import { Page, ListItemDialogEditText, Image } from "@mmrl/ui";
 import { ConfigProvider } from "@mmrl/providers";
-import { useConfig, useActivity } from "@mmrl/hooks";
+import { useConfig, useActivity, useTheme } from "@mmrl/hooks";
 import { Typography, Divider, Card, CardContent, CardActionArea, Switch, List, ListItemButton, ListSubheader, ListItem, ListItemText } from "@mui/material";
 
 const TerminalActivity = include("activitys/TerminalActivity.jsx");
@@ -10,6 +10,7 @@ const CenterBox = include("components/CenterBox.jsx");
 
 function App() {
   const { context } = useActivity();
+  const { theme } = useTheme()
   const [config, setConfig] = useConfig();
 
   if (BuildConfig.VERSION_CODE < 21410) {
@@ -34,6 +35,7 @@ function App() {
             });
           }}
         >
+          <Image src="<CONFCWD>/assets/logcat-min.png" noOpen modFSAdds={{ MODID: modid }} sx={{ borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,   border:"none",   width: "100%", height: "50%" }} />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               Logcat
@@ -61,28 +63,6 @@ function App() {
         >
           <ListItemText primary="Change curl bin path" secondary={config.curl} />
         </ListItemDialogEditText>
-        <ListItemDialogEditText
-          onSuccess={(val) => {
-            if (val) setConfig("zip", val);
-          }}
-          inputLabel="Path"
-          type="text"
-          title="Change zip bin path"
-          initialValue={config.zip}
-        >
-          <ListItemText primary="Change zip bin path" secondary={config.zip} />
-        </ListItemDialogEditText>
-        <ListItemDialogEditText
-          onSuccess={(val) => {
-            if (val) setConfig("unzip", val);
-          }}
-          inputLabel="Path"
-          type="text"
-          title="Change unzip bin path"
-          initialValue={config.unzip}
-        >
-          <ListItemText primary="Change unzip bin path" secondary={config.unzip} />
-        </ListItemDialogEditText>
       </List>
 
       <List subheader={<ListSubheader>Arguments</ListSubheader>}>
@@ -97,28 +77,6 @@ function App() {
         >
           <ListItemText primary="Add extra curl arguments" secondary={config.curl__args} />
         </ListItemDialogEditText>
-        <ListItemDialogEditText
-          onSuccess={(val) => {
-            if (val) setConfig("zip__args", val);
-          }}
-          inputLabel="Arguments"
-          type="text"
-          title="Add extra zip arguments"
-          initialValue={config.zip__args}
-        >
-          <ListItemText primary="Add extra zip arguments" secondary={config.zip__args} />
-        </ListItemDialogEditText>
-        <ListItemDialogEditText
-          onSuccess={(val) => {
-            if (val) setConfig("unzip__args", val);
-          }}
-          inputLabel="Arguments"
-          type="text"
-          title="Add extra unzip arguments"
-          initialValue={config.unzip__args}
-        >
-          <ListItemText primary="Add extra unzip arguments" secondary={config.unzip__args} />
-        </ListItemDialogEditText>
       </List>
 
       <Divider />
@@ -132,21 +90,18 @@ function App() {
   );
 }
 
-const version = "v1";
+const version = "v7";
+
 export default () => {
   return (
     <ConfigProvider
       initialConfig={{
         curl: "/system/usr/share/mmrl/bin/curl",
-        zip: "/system/usr/share/mmrl/bin/zip",
-        unzip: "/system/bin/unzip",
         clear_terminal: true,
         curl__args: "-L",
-        zip__args: "-r",
-        unzip__args: "-qq",
       }}
-      loadFromFile={`/data/adb/mmrl/mmrlini.${version}.json`}
-      loader="json"
+      loadFromFile={`/data/adb/mmrl/mmrlini.${version}.ini`}
+      loader="ini"
     >
       <App />
     </ConfigProvider>
