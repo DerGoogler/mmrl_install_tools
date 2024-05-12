@@ -1,7 +1,7 @@
 id=mmrl_install_tools
 name=MMRL Install Tools
-version=7.5.10
-versionCode=7510
+version=7.5.11
+versionCode=7511
 author=Der_Googler
 description=Required module if you want to install modules from Explore
 cover=<CONFCWD>/assets/logcat-min.png
