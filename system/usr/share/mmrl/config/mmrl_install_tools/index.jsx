@@ -10,12 +10,12 @@ const CenterBox = include("components/CenterBox.jsx");
 
 function App() {
   const { context } = useActivity();
-  const { theme } = useTheme()
+  const { theme } = useTheme();
   const [config, setConfig] = useConfig();
 
   if (BuildConfig.VERSION_CODE < 21410) {
     return (
-      <Page renderToolbar={RenderToolbar("Version mismatch")}>
+      <Page renderToolbar={RenderToolbar({ title: "Version mismatch" })}>
         <CenterBox>
           MMRL Install Tools requires MMRL above <strong>2.14.10</strong>!
         </CenterBox>
@@ -24,7 +24,7 @@ function App() {
   }
 
   return (
-    <Page sx={{ p: 0 }} renderToolbar={RenderToolbar("MMRL Install Tools")}>
+    <Page sx={{ p: 0 }} renderToolbar={RenderToolbar({ isHome: true })}>
       <Card sx={{ m: 1 }}>
         <CardActionArea
           onClick={() => {
@@ -35,7 +35,12 @@ function App() {
             });
           }}
         >
-          <Image src="<CONFCWD>/assets/logcat-min.png" noOpen modFSAdds={{ MODID: modid }} sx={{ borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`,   border:"none",   width: "100%", height: "50%" }} />
+          <Image
+            src="<CONFCWD>/assets/logcat-min.png"
+            noOpen
+            modFSAdds={{ MODID: modid }}
+            sx={{ borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0px 0px`, border: "none", width: "100%", height: "50%" }}
+          />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               Logcat
@@ -77,14 +82,6 @@ function App() {
         >
           <ListItemText primary="Add extra curl arguments" secondary={config.curl__args} />
         </ListItemDialogEditText>
-      </List>
-
-      <Divider />
-
-      <List subheader={<ListSubheader>Project</ListSubheader>}>
-        <ListItemButton onClick={() => window.open("https://github.com/DerGoogler/MMRL/issues")}>
-          <ListItemText primary="Report a issue" />
-        </ListItemButton>
       </List>
     </Page>
   );

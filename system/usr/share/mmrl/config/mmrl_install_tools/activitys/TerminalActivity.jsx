@@ -6,7 +6,7 @@ import { Stack, Box, Slider } from "@mui/material";
 import Terminal from "@mmrl/terminal";
 import FlatList from "flatlist-react";
 
-const RenderToolbar = include("components/RenderToolbar.jsx")
+const RenderToolbar = include("components/RenderToolbar.jsx");
 
 export default () => {
   const [fontSize, setFontSize] = useNativeStorage("mmrlini_log_terminal", 100);
@@ -51,7 +51,7 @@ export default () => {
   return (
     <Page
       onShow={startLog}
-      renderToolbar={RenderToolbar("Logcat")}
+      renderToolbar={RenderToolbar({ title: "Logcat" })}
       modifier="noshadow"
       renderBottomToolbar={() => {
         return (
