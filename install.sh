@@ -33,6 +33,6 @@ set_permissions() {
 
     set_perm $MODPATH/system/etc/mmrl.sh 0 0 0644
     set_perm $MODPATH/system/usr/share/mmrl/bin/curl 0 0 0755
-    set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_explore_install_v6 0 0 0755
-    set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_local_install_v6 0 0 0755
+    set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_explore_install_v8.sh 0 0 0755
+    set_perm $MODPATH/system/usr/share/mmrl/bin/mmrl_local_install_v8.sh 0 0 0755
 }
