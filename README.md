@@ -5,7 +5,8 @@
 
 # MMRL Install Tools
 
-> MMRL does not support MMRL Install Tools below V6 by default!
+> [!WARNING]
+> Please be advised that **support** and **update delivery** for MMRL Install Tools will be discontinued as of June 20, 2024. We recommend migrating to [MMRL-CLI](https://github.com/DerGoogler/MMRL-CLI) to ensure uninterrupted service and continued improvements.
 
 Required module if you want to install modules from Explore
 
