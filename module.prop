@@ -1,7 +1,7 @@
 id=mmrl_install_tools
 name=MMRL Install Tools
-version=8.5.12
-versionCode=8512
+version=8.5.13
+versionCode=8513
 author=Der_Googler
 description=Please be advised that support and update delivery for MMRL Install Tools will be discontinued as of June 20, 2024. We recommend migrating to MMRL-CLI to ensure uninterrupted service and continued improvements.\nRequired module if you want to install modules from Explore
 cover=<CONFCWD>/assets/logcat-min.png

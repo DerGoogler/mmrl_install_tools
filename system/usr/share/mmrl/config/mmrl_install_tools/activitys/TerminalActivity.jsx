@@ -3,7 +3,6 @@ import { Page, BottomToolbar, Ansi } from "@mmrl/ui";
 import { useActivity, useNativeStorage, useTheme, useSettings } from "@mmrl/hooks";
 import { Add, Remove } from "@mui/icons-material";
 import { Stack, Box, Slider } from "@mui/material";
-import Terminal from "@mmrl/terminal";
 import FlatList from "flatlist-react";
 
 const RenderToolbar = include("components/RenderToolbar.jsx");
@@ -38,14 +37,28 @@ export default () => {
       PACKAGENAME: BuildConfig.APPLICATION_ID,
     };
 
-    Terminal.exec({
-      command: "logcat --pid=`pidof -s $PACKAGENAME` -v color",
-      env: envp,
-      onLine: (line) => {
+    if (BuildConfig.VERSION_CODE >= 21817) {
+      const logcat = new Terminal();
+      logcat.env = envp;
+      logcat.onLine = (line) => {
         addLine(line);
-      },
-      onExit: (code) => {},
-    });
+      };
+      logcat.onExit = (code) => { };
+      logcat.exec("logcat --pid=`pidof -s $PACKAGENAME` -v color");
+    } else {
+      const Terminal = require("@mmrl/terminal")
+
+      Terminal.exec({
+        command: "logcat --pid=`pidof -s $PACKAGENAME` -v color",
+        env: envp,
+        onLine: (line) => {
+          addLine(line);
+        },
+        onExit: (code) => { },
+      });
+    }
+
+
   }, []);
 
   return (
