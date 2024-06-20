@@ -7,6 +7,7 @@
 
 > [!WARNING]
 > Please be advised that **support** and **update delivery** for MMRL Install Tools will be discontinued as of June 20, 2024. We recommend migrating to [MMRL-CLI](https://github.com/DerGoogler/MMRL-CLI) to ensure uninterrupted service and continued improvements.
+> [Read more 🔗](https://dergoogler.com/farewell-to-mmrl-install-tools-embrace-the-future-with-mmrl-cli)
 
 Required module if you want to install modules from Explore
 
